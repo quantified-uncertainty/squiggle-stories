@@ -13,7 +13,7 @@ const SquiggleEditor = dynamic(() => import ("@quri/squiggle-components").then((
 // ^ works, but updating the editor content from the outside would be tricky.
 // and so instead we are hacking our own mini-editor.
 
-const effectButtonStyle = "bg-transparent m-2 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-5 mb-5";
+const effectButtonStyle = "bg-transparent m-2 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-5";
 
 const countNumberOfLines = string => {
   return string.split("\n").length
@@ -33,7 +33,7 @@ function DynamicSquiggleChart({squiggleInput, isOutdated}) {
     let code = squiggleInput.squiggleCode
     return (
       <div className="grid place-items-center">
-        <div className="grid place-items-center bg-white w-11/12 p-8">
+        <div className="bg-white w-11/12 p-8">
           <h4 className={
             `text-xl font-bold mb-4 ${
               isOutdated ? "" : "hidden"
@@ -42,7 +42,7 @@ function DynamicSquiggleChart({squiggleInput, isOutdated}) {
             Outdated, rerun model at your convenience
           </h4>
 
-          <div className=" max-w-2xl">
+          <div className=" h-96 max-w-2xl">
             <SquiggleChart code={code}
               width={672}
               height={208}
@@ -59,18 +59,18 @@ function DynamicSquiggleChart({squiggleInput, isOutdated}) {
 }
 
 // Main
-export function DisplayerControlledEditor({initialSquiggleCode, editorCode, setEditorCode, sectionTitle, extraCodeBefore}) { 
+export function DisplayerControlledEditor({initialSquiggleString}) { // console.log("initialSquiggleString", initialSquiggleString)
   const backupSquiggleString = `x = 1 to 10
 x`
 
-  const [squiggleCode, setSquiggleCode] = useState(extraCodeBefore + "\n" + (initialSquiggleCode || backupSquiggleString));
-
+  const [squiggleCode, setSquiggleCode] = useState(initialSquiggleString || backupSquiggleString);
+  const [editorCode, setEditorCode] = useState(initialSquiggleString || backupSquiggleString);
   const [changeSquiggleCodeTimeout, setChangeSquiggleCodeTimeout] = useState(0);
 
   let onClickRunCodeButton = newCode => {
     clearTimeout(changeSquiggleCodeTimeout)
     let newTimeout = setTimeout(() => {
-      setSquiggleCode(extraCodeBefore + "\n" + newCode)
+      setSquiggleCode(newCode)
     }, 100)
     setChangeSquiggleCodeTimeout(newTimeout)
   }
@@ -83,28 +83,8 @@ x`
       }`
     }>
 
-      <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
-        <h4 className="text-lg font-bold mb-4">
-          {sectionTitle}
-        </h4>
-        <textarea value={editorCode}
-          readOnly={false}
-          onChange={
-            (event) => setEditorCode(event.target.value)
-          }
-          rows={
-            countNumberOfLines(editorCode)
-          }
-          cols={120}
-          spellcheck={"false"}
-          className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm"/>
-        <br/>
-        <button className={effectButtonStyle}
-          onClick={
-            () => onClickRunCodeButton(editorCode)
-        }>
-          Run model
-        </button>
+      <div className="bg-blue-100 pt-8 pb-12 mb-8  content-center items-center">
+        <h1 className="pb-5">Using a chart, controlled with React.</h1>
         <DynamicSquiggleChart squiggleInput={
             ({squiggleCode: squiggleCode})
           }
@@ -114,7 +94,26 @@ x`
           stopShowing={
             () => setSquiggleCode(null)
           }/>
-
+        <h4 className="text-lg font-bold mb-4 mt-8">
+          Underlying Squiggle Code
+        </h4>
+        <textarea value={editorCode}
+          readOnly={false}
+          onChange={
+            (event) => setEditorCode(event.target.value)
+          }
+          rows={
+            countNumberOfLines(editorCode) + 1
+          }
+          cols={70}
+          className="text-left text-gray-600 bg-white rounded text-normal p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12"/>
+        <br/>
+        <button className={effectButtonStyle}
+          onClick={
+            () => onClickRunCodeButton(editorCode)
+        }>
+          Run model
+        </button>
       </div>
 
 
