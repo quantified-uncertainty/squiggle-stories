@@ -84,6 +84,7 @@ x`
     }>
 
       <div className="bg-blue-100 pt-8 pb-12 mb-8  content-center items-center">
+        <h1 className="pb-5">Using a chart, controlled with React.</h1>
         <DynamicSquiggleChart squiggleInput={
             ({squiggleCode: squiggleCode})
           }
@@ -93,7 +94,7 @@ x`
           stopShowing={
             () => setSquiggleCode(null)
           }/>
-        <h4 className="text-2xl font-bold mb-4 mt-8">
+        <h4 className="text-lg font-bold mb-4 mt-8">
           Underlying Squiggle Code
         </h4>
         <textarea value={editorCode}

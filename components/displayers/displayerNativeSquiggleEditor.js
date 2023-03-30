@@ -6,7 +6,6 @@ const SquiggleEditor = dynamic(() => import ("@quri/squiggle-components").then((
   ssr: false
 });
 
-
 /*
     code?: string;
     defaultCode?: string;
@@ -23,10 +22,13 @@ export function DisplayerNativeSquiggleEditor({initialSquiggleString}) { // cons
   return (
     <div className={`grid place-items-center w-full`}>
 
-      <div className="block bg-white content-center items-center h-96 max-w-3xl">
-        <SquiggleEditor defaultCode={initialSquiggleString}
-          width={672}
-          height={200}/>
+      <div className="grid place-items-center bg-white">
+      <h1 className="pt-10">Using Squiggle's editor component</h1>
+        <div className="bg-white m-12">
+          <SquiggleEditor defaultCode={initialSquiggleString}
+            width={672}
+            height={200}/>
+        </div>
       </div>
 
 
