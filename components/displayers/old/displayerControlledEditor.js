@@ -49,10 +49,9 @@ function DynamicSquiggleChart({squiggleInput, isOutdated}) {
               bindings={
                 {}
               }
-              showSummary={true}
-              showTypes={true}
+              showSummary={false}
               distributionChartSettings={
-                {showSummary: true}
+                {showSummary: false}
               }/>
           </div>
         </div>
