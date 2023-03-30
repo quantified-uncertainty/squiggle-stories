@@ -6,6 +6,10 @@ const SquiggleChart = dynamic(() => import ("@quri/squiggle-components").then((m
   ssr: false
 });
 
+const SquiggleEditor = dynamic(() => import ("@quri/squiggle-components").then((mod) => mod.SquiggleEditor), {
+  loading: () => <p>Loading...</p>,
+  ssr: false
+});
 
 /*
 squiggleInput: {
@@ -22,7 +26,7 @@ export function DynamicSquiggleChart({ squiggleChartCode }) {
       <div className="grid place-items-center">
         <div className="grid place-items-center bg-white w-11/12 p-8">
           <div className=" max-w-2xl">
-            <SquiggleChart code={squiggleChartCode}
+            <SquiggleEditor code={squiggleChartCode}
               width={672}
               height={1000}
               bindings={
