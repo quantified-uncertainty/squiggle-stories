@@ -8,9 +8,8 @@ import React from "react";
 import {Homepage} from "../components/homepage.js";
 
 /* Definitions */
-const initialSquiggleString = "1 to 10"
 
 // Main react component
-export default function Home({initialSquiggleString}) {
-    return <Homepage initialSquiggleString={initialSquiggleString}/>;
+export default function Home() {
+    return <Homepage/>;
 }

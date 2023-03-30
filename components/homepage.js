@@ -41,9 +41,11 @@ value_additional_free_hour = 30 to 150 // dollars`
     value: value_nice_computer,
     recommendation: recommendation_nice_computer
   }
-  item_nice_computer
+  
   `
   const [p_1_sq_2_editorCode, p_1_sq_2_setEditorCode] = useState(p_1_sq_2_nice_computer);
+  let p_1_sq_2_with_code_before  = p_1_sq_1_general_variables + "\n" + p_1_sq_2_nice_computer
+  let p_1_sq_2_computeCodeWithExtraBefore = newCode => p_1_sq_1_editorCode + newCode
 
   return (
     <div className="grid align-self-center items-center mt-10 place-items-center">
@@ -57,15 +59,17 @@ value_additional_free_hour = 30 to 150 // dollars`
           editorCode={p_1_sq_1_editorCode}
           setEditorCode={p_1_sq_1_setEditorCode}
           sectionTitle={"General variables"}
-          extraCodeBefore={""}/>
+          extraCodeBefore={""}
+          computeCodeWithExtraBefore={newCode => newCode}/>
 
         <h3 className="mb-4">A nice computer</h3>
         <p>With the above variables in mind, here is how much I think I value a nice computer</p>
-        <DisplayerControlledEditor initialSquiggleCode={p_1_sq_2_editorCode}
+        {/*<DisplayerControlledEditor initialSquiggleCode={p_1_sq_2_with_code_before}
           editorCode={p_1_sq_2_editorCode}
           setEditorCode={p_1_sq_2_setEditorCode}
           sectionTitle={"General variables"}
-          extraCodeBefore={p_1_sq_1_editorCode}/>
+          computeCodeWithExtraBefore={p_1_sq_2_computeCodeWithExtraBefore}
+  />*/}
 
         <h2>Part II:</h2>
       </div>

@@ -16,18 +16,19 @@ body {
 }
 
 h1 {
-  font-size: 24px;
+  font-size: 50px;
   font-weight: bold;
   margin-bottom: 10px;
   color: #1F2937;
 }
 
 h2 {
-  font-size: 20px;
+  font-size: 32px;
   font-weight: bold;
   margin-top: 10px;
   margin-bottom: 10px;
   color: #1F2937;
+  text-align: left;
 }
 
 h3 {
@@ -35,6 +36,8 @@ h3 {
   margin-top: 5px;
   margin-bottom: 5px;
   color: #1F2937;
+  font-size: 24px;
+  text-align: left;
 }
 
 a {
@@ -44,6 +47,7 @@ a {
 
 p, ul {
   margin-bottom: 10px;
+  text-align: left;
 }
 
 ul {

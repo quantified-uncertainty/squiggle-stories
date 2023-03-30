@@ -6,9 +6,9 @@ import Head from "next/head";
 
 function MyApp({Component, pageProps}) {
     return (
-        <div className="flex flex-col items-center justify-center min-h-screen py-2">
+        <div className="flex flex-col items-center justify-center min-h-screen py-2 bg-gray-50">
             {/* Webpage name & favicon */}
-            <div className="mt-10">
+            <div className="mt-0">
                 <Head>
                     <title>Squiggle tweaker</title>
                     <link rel="icon" href="/favicon.ico"/>

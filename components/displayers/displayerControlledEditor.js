@@ -45,12 +45,15 @@ function DynamicSquiggleChart({squiggleInput, isOutdated}) {
           <div className=" max-w-2xl">
             <SquiggleChart code={code}
               width={672}
-              height={208}
+              height={1000}
               bindings={
-                squiggleInput.binding
+                {}
               }
               showSummary={true}
-              showTypes={true}/>
+              showTypes={true}
+              distributionChartSettings={
+                {showSummary: true}
+              }/>
           </div>
         </div>
       </div>
@@ -59,22 +62,27 @@ function DynamicSquiggleChart({squiggleInput, isOutdated}) {
 }
 
 // Main
-export function DisplayerControlledEditor({initialSquiggleCode, editorCode, setEditorCode, sectionTitle, extraCodeBefore}) { 
+export function DisplayerControlledEditor({
+  initialSquiggleCode,
+  editorCode,
+  setEditorCode,
+  sectionTitle,
+  computeCodeWithExtraBefore
+}) {
   const backupSquiggleString = `x = 1 to 10
 x`
 
-  const [squiggleCode, setSquiggleCode] = useState(extraCodeBefore + "\n" + (initialSquiggleCode || backupSquiggleString));
+  const [squiggleCode, setSquiggleCode] = useState((initialSquiggleCode || backupSquiggleString));
 
   const [changeSquiggleCodeTimeout, setChangeSquiggleCodeTimeout] = useState(0);
 
   let onClickRunCodeButton = newCode => {
     clearTimeout(changeSquiggleCodeTimeout)
     let newTimeout = setTimeout(() => {
-      setSquiggleCode(extraCodeBefore + "\n" + newCode)
-    }, 100)
+      setSquiggleCode((newCode))
+    }, 50)
     setChangeSquiggleCodeTimeout(newTimeout)
   }
-
 
   return (
     <div className={
@@ -85,15 +93,14 @@ x`
 
       <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
         <h4 className="text-lg font-bold mb-4">
-          {sectionTitle}
-        </h4>
+          {sectionTitle} </h4>
         <textarea value={editorCode}
           readOnly={false}
           onChange={
             (event) => setEditorCode(event.target.value)
           }
           rows={
-            countNumberOfLines(editorCode)
+            countNumberOfLines(editorCode) * 1.15
           }
           cols={120}
           spellcheck={"false"}
