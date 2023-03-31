@@ -1,6 +1,9 @@
-import React, {useRef, useState, useEffect} from "react";
-import {DynamicSquiggleChart} from "./displayers/dynamicSquiggleChart"
-import {DisplayerNativeSquiggleEditor} from "./displayers/displayerNativeSquiggleEditor"
+import React, {useState, memo} from "react";
+
+import {DynamicSquiggleChart as OriginalDynamicSquiggleChart} from "./displayers/dynamicSquiggleChart";
+
+const DynamicSquiggleChart = memo(OriginalDynamicSquiggleChart);
+
 // Helpers
 const effectButtonStyle = "bg-transparent m-2 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-5 mb-5";
 
@@ -34,7 +37,38 @@ value_additional_free_hour = 30 to 150 // dollars`
 
         <p>In my extended social circle, people sometimes make lists of &ldquo;things you should buy&rdquo;. My friend Gavin has gathered a list of such lists&nbsp;
           <a href="https://www.gleech.org/stuff">here</a>. I&rsquo;m going to go over a few of the items on those lists, and estimate their value. But before I get started, first I&rsquo;ll first have to set some variables, and determine how much I value a few things relative to each other. If you want to follow along, you can edit these to correspond to your values:</p>
-        <DisplayerNativeSquiggleEditor initialSquiggleString={"1 to 10"} onCodeChange={p1s1_setEditorCode}/>
+
+        <div className="grid place-items-center w-full">
+
+          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
+            <h4 className="text-lg font-bold mb-3">
+              {"General variables"} </h4>
+
+            <textarea value={p1s1_editor_code}
+              readOnly={false}
+              onChange={
+                (event) => p1s1_setEditorCode(event.target.value)
+              }
+              rows={
+                countNumberOfLines(p1s1_general_variables) * 1.15 + 1
+              }
+              cols={120}
+              spellcheck={"false"}
+              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
+              <br/>
+            <button className={effectButtonStyle}
+              onClick={
+                () => p1s1_setChartCode(p1s1_editor_code)
+            }>
+              Run model
+            </button>
+            <DynamicSquiggleChart squiggleChartCode={p1s1_chart_code}/>
+
+
+          </div>
+
+
+        </div>
         <h3 className="mb-4">A nice computer</h3>
         <p>With the above variables in mind, here is how much I think I value a nice computer</p>
 

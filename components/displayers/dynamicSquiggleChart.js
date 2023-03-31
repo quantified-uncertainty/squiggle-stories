@@ -26,7 +26,7 @@ export function DynamicSquiggleChart({ squiggleChartCode }) {
       <div className="grid place-items-center">
         <div className="grid place-items-center bg-white w-11/12 p-8">
           <div className=" max-w-2xl">
-            <SquiggleEditor code={squiggleChartCode}
+            <SquiggleChart code={squiggleChartCode}
               width={672}
               height={1000}
               bindings={
