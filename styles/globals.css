@@ -45,16 +45,21 @@ a {
   text-decoration: underline;
 }
 
-p, ul {
+p, ul, ol {
   margin-bottom: 10px;
   text-align: left;
 }
 
-ul {
+ul, ol {
   list-style-type: square;
   margin-left: 20px;
+  margin-bottom: 20px;
 }
 
+li {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
 th, td {
   font-size: 17px;
 }
