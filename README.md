@@ -1,15 +1,21 @@
 ## About
 
-This is a wip demo for using squiggle components in nextjs.
+This repository contains a story about relative values. It is built on top of [this nextjs/squiggle integration template](). 
 
 ## Roadmap
 
-- [x] Get this working for a simple, hardcoded model
-- [x] Generalize:
-  - [x] Add ability to input model from url
-  - [x] Add ability to have model-specific pages
-- [ ] Add ability to export changes.
-- [ ] Add ability to not run models immediately
+- [x] Sketch how the output will look
+- [x] Get a skeleton working
+- [ ] Add a few estimates of value of consumption
+- [ ] Add estimates of alternatives to consumption
+  - [ ] Using a cool relative values graph
+  - [ ] Using a relative values table
+  - [ ] Find out whether my preferences are cyclic? My marginal 5k of consumption > Saving for the option value > Donating to charity > My marginal 5k of consumption?
+- [ ] Relative values over career options.
+  - [ ] Relative values in general.
+  - [ ] Relative values taking into account personal fit.
+- [ ] Conclusion, reflection, comparison with foretold.
+- [ ] Look into "isCallback". Slava says: "But don't forget about useCallback, lack of it can kill React.memo optimization."
 
 ## Built with
 

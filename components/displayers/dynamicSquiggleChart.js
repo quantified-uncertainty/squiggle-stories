@@ -29,9 +29,7 @@ export function DynamicSquiggleChart({ squiggleChartCode }) {
             <SquiggleChart code={squiggleChartCode}
               width={672}
               height={1000}
-              bindings={
-                {}
-              }
+
               distributionChartSettings={
                 {showSummary: true}
               }/>
