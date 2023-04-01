@@ -6,23 +6,11 @@ const DynamicSquiggleChart = memo(OriginalDynamicSquiggleChart);
 // Helpers
 const effectButtonStyle = "bg-transparent m-2 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-5 mb-5";
 
-const sum = xs => {
-  let result = 0
-	for(let x of xs){
-		result += x
-	}
-	return result
-}
-
 const countNumberOfLines = string => {
-	// to do: get numCols as a function of screensize.
-	// (see how much each component takes, from tailwinds.) 
 	let numCols = 82
 	let lines = string.split("\n")
-	let line_equivalents = lines.map(l => Math.ceil(l.length/numCols) || 1)
-	let result = sum(line_equivalents) + 1
-	return result
-  // return string.split("\n").length * 1.3
+	let line_equivalents = lines.map(l => Math.ceil(l/))
+  return string.split("\n").length * 1.3
 }
 
 const getItemToDisplayFromSquiggleString = string => { 
@@ -191,35 +179,15 @@ item_casio_watch = {
 
 	// Prioritizing across consumer interventions
 	const p1s6_title = "Prioritizing across consumer interventions"
-	const p1s6_prioritizing = `budget = 1k
-granularity = 5 // dollars. lower number => more accuracy, less speed
-
-items = [item_nice_computer, item_nice_headphones, item_spare_laptop_charger, item_casio_watch]
-make_diminishing_maginal_return_function_from_item(item) = {
+	const p1s6_prioritizing = `items = [item_nice_computer, item_nice_headphones, item_spare_laptop_charger, item_casio_watch]
+diminishing_marginal_return_functions = List.map(items, {|item| 
   item_function = {|dollar_amount|
-	  result = if dollar_amount > mean(item.cost) then mean(item.value) else 0
-     result
+	  result = mean(mixture(item.cost)) > dollar_amount ? mean(mixture(item.value)) : 0
 	}
-  item_function
-}
-
-diminishing_marginal_return_functions = List.map(items, make_diminishing_maginal_return_function_from_item)
-
-listAppend = { |xs, x|
-  n = List.length(xs)
-  temp_list = List.upTo(0,n)
-  new_list = List.map(temp_list, {|i| 
-    result = i < n ? xs[i] : x
-    result
-  })
-  new_list
-}
-
-value_n_dollars_in_dollars = {|n| n}
-
-diminishing_marginal_return_functions2 = listAppend(diminishing_marginal_return_functions, value_n_dollars_in_dollars)
-
-optimal_allocation_consumer_products = Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions(diminishing_marginal_return_functions2, budget, granularity)`
+})
+budget = 5k
+granularity = 1 // dollar
+optimal_allocation_consumer_products = Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions(diminishing_marginal_return_functions, budget, granularity)`
 
   const [p1s6_editor_code, p1s6_setEditorCode] = useState(p1s6_prioritizing)
   const [p1s6_chart_code, p1s6_setChartCode] = useState(joinEnter([p1s1_general_variables, p1s6_prioritizing, getItemToDisplayFromSquiggleString(p1s6_prioritizing)]))
