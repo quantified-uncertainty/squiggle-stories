@@ -187,4 +187,3 @@ best_affordable_option = List.reduce(list_of_options, {value_best_option: 0, ite
   result = is_new_option_superior ? ({value_best_option: value_of_new_option, items_names_best_option: item_names}) : iter
   result 
 })
-best_affordable_option

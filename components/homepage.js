@@ -35,7 +35,7 @@ const getItemToDisplayFromSquiggleString = string => {
 	// then it is going to find the last =
 	// and it's going to return "y".
 	let lines = string.split("\n") 
-	let linesWithVariableAssignment = lines.filter(line => line.includes("="))
+	let linesWithVariableAssignment = lines.filter(line => line.includes("=") && !line.includes("  ") && !line.includes("\t"))
 	let n = linesWithVariableAssignment.length 
 	let lastVariableAssignmentLine = n > 0 ? linesWithVariableAssignment[n-1] : ""
 	let result = lastVariableAssignmentLine.replace(/(\s)?=.*/, "")
@@ -192,20 +192,86 @@ item_casio_watch = {
 	// Prioritizing across consumer interventions
 	const p1s6_title = "Prioritizing across consumer interventions"
 	const p1s6_prioritizing = `budget = 1k
+budget = 1k
 granularity = 5 // dollars. lower number => more accuracy, less speed
 
-items = [item_nice_computer, item_nice_headphones, item_spare_laptop_charger, item_casio_watch]
+items = [item_nice_computer, item_nice_headphones, item_spare_laptop_charger, item_casio_watch, {name: "random lotery", value: 10 to 20, cost: 1 to 2}]
 
 n = List.length(items)
-values = List.map(items, {|item| item.value})
-costs = List.map(items, {|item| item.cost})
-
 num_options = 2^n // each item can be chosen or not
 list_of_options = List.upTo(0, num_options-1)
-can_you_afford_option = {|option|
-  is_item_1_in_it = 
+
+// Helpers
+isDivisionExact = {|a,b| // a divided by b
+  multiplesOfB = List.map(List.upTo(0,20), {|x| x * b})
+  tempL = List.map(multiplesOfB, {|y| y == a})
+  result = List.reduce(tempL, false, {|iter, item| (iter || item)})
+  result
 }
-todo="To do: choose whether to do this in Squiggle or in js"
+isOdd = {|x| !isDivisionExact(x, 2)}
+
+getItemsInOptionBools = {|option|
+  is_item_1_in_it = isOdd(option)
+  option_sub_1 = option - (is_item_1_in_it ? 1 : 0)
+  
+  is_item_2_in_it = isDivisionExact(option_sub_1, 2)
+  option_sub_2 = option_sub_1 - (is_item_2_in_it ? 2 : 0)
+  
+  is_item_3_in_it = isDivisionExact(option_sub_2, 4)
+  option_sub_3 = option_sub_2 - (is_item_3_in_it ? 4 : 0)
+  
+  is_item_4_in_it = isDivisionExact(option_sub_3, 4)
+  option_sub_4 = option_sub_3 - (is_item_4_in_it ? 8 : 0)
+
+  is_item_5_in_it = isDivisionExact(option_sub_4, 8)
+  option_sub_5 = option_sub_4 - (is_item_5_in_it ? 16 : 0)
+
+  result = [is_item_1_in_it, is_item_2_in_it, is_item_3_in_it, is_item_4_in_it, is_item_5_in_it]
+  result
+} // to do: do this as a reduce loop?
+
+listAppend = {|xs, x|
+  n = List.length(xs)
+  temp_list = List.upTo(0,n)
+  new_list = List.map(temp_list, {|i| 
+    result = i < n ? xs[i] : x
+    result
+  })
+  new_list
+}
+
+getItemsInOption = {|option|
+  bools = getItemsInOptionBools(option)
+  temp_list = List.upTo(0, n-1)
+  result = List.reduce(temp_list, [],{|iter, i| 
+    !bools[i] ? iter : listAppend(iter, items[i])
+  })
+  result
+}
+
+canYouAffordOption = {|option, budget|
+  items_in_option = getItemsInOption(option)
+  costs = List.map(items_in_option, {|i| mean(i.cost)})
+  cost  = List.reduce(costs, 0, {|a,b| a + b})
+  result = cost < budget
+  result
+}
+getValueOfOption = {|option|
+  items_in_option = getItemsInOption(option)
+  values = List.map(items_in_option, {|i| mean(i.value)})
+  value = List.reduce(values, 0, {|a,b| a + b})
+  value
+}
+
+// Get best option within budget
+best_affordable_option = List.reduce(list_of_options, {value_best_option: 0, item_names_best_option: []}, {|iter, option|
+  value_of_new_option = getValueOfOption(option) 
+  is_new_option_superior = canYouAffordOption(option, budget) && (getValueOfOption(option) > iter.value_best_option)
+  item_names = List.map(getItemsInOption(option), {|o| o.name})
+  result = is_new_option_superior ? ({value_best_option: value_of_new_option, items_names_best_option: item_names}) : iter
+  result 
+})
+best_affordable_option
 `
 
   const [p1s6_editor_code, p1s6_setEditorCode] = useState(p1s6_prioritizing)
