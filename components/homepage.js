@@ -21,7 +21,7 @@ const getItemToDisplayFromSquiggleString = string => {
 	// and it's going to return "y".
 	let lines = string.split("\n") 
 	let linesWithVariableAssignment = lines.filter(line => line.includes("="))
-	let n = length(linesWithVariableAssignment)
+	let n = linesWithVariableAssignment.length 
 	let lastVariableAssignmentLine = n > 0 ? linesWithVariableAssignment[n-1] : ""
 	let result = lastVariableAssignmentLine.replace(/(\s)?=.*/, "")
 	return result 
@@ -170,6 +170,16 @@ item_casio_watch = {
   const [p1s5_chart_code, p1s5_setChartCode] = useState(p1s1_general_variables + "\n" + p1s5_casio_watch + "\n" + getItemToDisplayFromSquiggleString(p1s5_casio_watch))
   const p1s5_buildChartCode = () => p1s5_setChartCode(p1s1_editor_code + "\n" + p1s5_editor_code + "\n" + getItemToDisplayFromSquiggleString(p1s5_casio_watch))
 
+	// Prioritizing across consumer interventions
+	const p1s6_prioritizing = `items = [item_nice_computer, item_nice_headphones, item_spare_laptop_charger, item_casio_watch]
+diminishing_marginal_return_functions = List.map(items, {|item| 
+  item_function = {|dollar_amount|
+	  result = mean(mixture(item.cost)) > dollar_amount ? mean(mixture(item.value)) : 0
+	}
+})
+budget = 5k
+granularity = 1 // dollar
+optimal_allocation_consumer_products = Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions(diminishing_marginal_return_functions, budget, granularity)`
   return (
     <div className="grid align-self-center items-center mt-10 place-items-center">
       <div className="w-9/12">
@@ -341,7 +351,7 @@ item_casio_watch = {
           <a href="to do">here</a>.
         </p>
         <h3>Prioritization across options</h3>
-        <p>Now, one thing we can do when given these estimates is to prioritize across them. That is, if you have a finite budget and want to extract as much value from the above consumer products, what should you buy? To solve this, we are going to use a pretty general function baked into Squiggle,<pre>Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions</pre>.</p>
+        <p>Now, one thing we can do when given these estimates is to prioritize across them. That is, if you have a finite budget and want to extract as much value from the above consumer products, what should you buy? To solve this, we are going to use a pretty general function baked into Squiggle: <code>Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions</code>.</p>
         <h2>Part II:</h2>
       </div>
     </div>

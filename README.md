@@ -18,6 +18,7 @@ This repository contains a story about relative values. It is built on top of [t
 - Misc issues:
   - [ ] Look into "isCallback". Slava says: "But don't forget about useCallback, lack of it can kill React.memo optimization."
   - [ ] Look into autoresizing textarea components (that are controllable) <https://github.com/Andarist/react-textarea-autosize>
+- [ ] wrap mean(mixture(d)) into its own function, called something like numberOrDistributionIntoDistribution. 
 
 ## Built with
 
