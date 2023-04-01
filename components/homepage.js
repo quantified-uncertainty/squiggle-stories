@@ -1,7 +1,6 @@
 import React, {useState, memo} from "react";
 
 import {DynamicSquiggleChart as OriginalDynamicSquiggleChart} from "./displayers/dynamicSquiggleChart";
-
 const DynamicSquiggleChart = memo(OriginalDynamicSquiggleChart);
 
 // Helpers
@@ -10,6 +9,24 @@ const effectButtonStyle = "bg-transparent m-2 hover:bg-blue-500 text-blue-700 fo
 const countNumberOfLines = string => {
   return string.split("\n").length
 }
+
+const getItemToDisplayFromSquiggleString = string => { 
+	// gets Squiggle code as a string, 
+	// and returns the variable to display
+	// it's going to be the last variable which was allocated.
+	// For example, if the code is x = `x = 1
+	// y = 1
+	// `
+	// then it is going to find the last =
+	// and it's going to return "y".
+	let lines = string.split("\n") 
+	let linesWithVariableAssignment = lines.filter(line => line.includes("="))
+	let n = length(linesWithVariableAssignment)
+	let lastVariableAssignmentLine = n > 0 ? linesWithVariableAssignment[n-1] : ""
+	let result = lastVariableAssignmentLine.replace(/(\s)?=.*/, "")
+	return result 
+}
+
 
 // Main
 export function Homepage() {
@@ -47,12 +64,10 @@ item_nice_computer = {
 	cost: cost_nice_computer,
 	value: value_nice_computer,
 	recommendation: recommendation_nice_computer
-}
-item_nice_computer
-`
+}`
   const [p1s2_editor_code, p1s2_setEditorCode] = useState(p1s2_nice_computer)
-  const [p1s2_chart_code, p1s2_setChartCode] = useState(p1s1_general_variables + "\n" + p1s2_nice_computer)
-  const p1s2_buildChartCode = () => p1s2_setChartCode(p1s1_editor_code + "\n" + p1s2_editor_code)
+  const [p1s2_chart_code, p1s2_setChartCode] = useState(p1s1_general_variables + "\n" + p1s2_nice_computer + "\n" + getItemToDisplayFromSquiggleString(p1s2_nice_computer))
+  const p1s2_buildChartCode = () => p1s2_setChartCode(p1s1_editor_code + "\n" + p1s2_editor_code + getItemToDisplayFromSquiggleString(p1s2_editor_code))
 
   // Nice headphones
   let p1s3_title = "Nice headphones"
@@ -99,12 +114,11 @@ item_nice_headphones = {
   cost: cost_nice_headphones,
   value: value_nice_headphones,
   recommendation: recommendation_nice_headphones
-}
-item_nice_headphones`
+}`
 
   const [p1s3_editor_code, p1s3_setEditorCode] = useState(p1s3_nice_headphones)
-  const [p1s3_chart_code, p1s3_setChartCode] = useState(p1s1_general_variables + "\n" + p1s3_nice_headphones)
-  const p1s3_buildChartCode = () => p1s3_setChartCode(p1s1_editor_code + "\n" + p1s3_editor_code)
+  const [p1s3_chart_code, p1s3_setChartCode] = useState(p1s1_general_variables + "\n" + p1s3_nice_headphones + "\n" + getItemToDisplayFromSquiggleString(p1s3_nice_headphones))
+  const p1s3_buildChartCode = () => p1s3_setChartCode(p1s1_editor_code + "\n" + p1s3_editor_code + "\n" + getItemToDisplayFromSquiggleString(p1s3_editor_code))
 
   // Spare laptop charger
   let p1s4_title = "Spare laptop charger"
@@ -124,11 +138,10 @@ item_spare_laptop_charger = {
   cost: cost_spare_laptop_charger,
   value: value_spare_laptop_charger,
   recommendation: recommendation_spare_laptop_charger
-}
-item_spare_laptop_charger`
+}`
   const [p1s4_editor_code, p1s4_setEditorCode] = useState(p1s4_spare_charger)
-  const [p1s4_chart_code, p1s4_setChartCode] = useState(p1s1_general_variables + "\n" + p1s4_spare_charger)
-  const p1s4_buildChartCode = () => p1s4_setChartCode(p1s1_editor_code + "\n" + p1s4_editor_code)
+  const [p1s4_chart_code, p1s4_setChartCode] = useState(p1s1_general_variables + "\n" + p1s4_spare_charger + "\n" + getItemToDisplayFromSquiggleString(p1s4_spare_charger))
+  const p1s4_buildChartCode = () => p1s4_setChartCode(p1s1_editor_code + "\n" + p1s4_editor_code + "\n" + getItemToDisplayFromSquiggleString(p1s4_editor_code))
 
   // Casio watch
   let p1s5_title = "Spare laptop charger"
@@ -152,13 +165,10 @@ item_casio_watch = {
   cost: cost_casio_watch,
   value: value_casio_watch,
   recommendation: recommendation_casio_watch
-}  
-
-item_casio_watch
-`
+}`
   const [p1s5_editor_code, p1s5_setEditorCode] = useState(p1s5_casio_watch)
-  const [p1s5_chart_code, p1s5_setChartCode] = useState(p1s1_general_variables + "\n" + p1s5_casio_watch)
-  const p1s5_buildChartCode = () => p1s5_setChartCode(p1s1_editor_code + "\n" + p1s5_editor_code)
+  const [p1s5_chart_code, p1s5_setChartCode] = useState(p1s1_general_variables + "\n" + p1s5_casio_watch + "\n" + getItemToDisplayFromSquiggleString(p1s5_casio_watch))
+  const p1s5_buildChartCode = () => p1s5_setChartCode(p1s1_editor_code + "\n" + p1s5_editor_code + "\n" + getItemToDisplayFromSquiggleString(p1s5_casio_watch))
 
   return (
     <div className="grid align-self-center items-center mt-10 place-items-center">
@@ -167,7 +177,8 @@ item_casio_watch
         <h2 className="mb-4">Part I: Consumerism</h2>
 
         <p>In my extended social circle, people sometimes make lists of &ldquo;things you should buy&rdquo;. My friend Gavin has gathered a list of such lists&nbsp;
-          <a href="https://www.gleech.org/stuff">here</a>. I&rsquo;m going to go over a few of the items on those lists, and estimate their value. But before I get started, first I&rsquo;ll first have to set some variables, and determine how much I value a few things relative to each other. If you want to follow along, you can edit these to correspond to your values:</p>
+          <a href="https://www.gleech.org/stuff">here</a>. I&rsquo;m going to go over a few of the items on those lists, and estimate their value. And I&rsquo;m starting this story that way not because estimating the consumer surplus of products is particularly important, but because it is easy and intersting. 
+		</p><p>But before I get started, first I&rsquo;ll first have to set some variables, and determine how much I value a few things relative to each other. If you want to follow along, you can edit these to correspond to your values:</p>
 
         <div className="grid place-items-center w-full">
           {/* I'm going to repeat this piece of code a few times, 
@@ -295,7 +306,7 @@ item_casio_watch
               Run model
             </button>
             <DynamicSquiggleChart squiggleChartCode={p1s4_chart_code}/>
-          </div>
+            </div>
         </div>
 
         <h3 className="mb-4">Casio watch</h3>
@@ -329,8 +340,8 @@ item_casio_watch
         <p>But you get the idea. I've also played around with models of the value of a sleep mask, taking melatonin, having an external battery for a phone, stocking zinc lozenges, having a vertical mouse, an external microphone, or a blog. You can see some of those models
           <a href="to do">here</a>.
         </p>
-        <h3>Prioritization across models</h3>
-        <p>Now, one thing we can do when given these </p>
+        <h3>Prioritization across options</h3>
+        <p>Now, one thing we can do when given these estimates is to prioritize across them. That is, if you have a finite budget and want to extract as much value from the above consumer products, what should you buy? To solve this, we are going to use a pretty general function baked into Squiggle,<pre>Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions</pre>.</p>
         <h2>Part II:</h2>
       </div>
     </div>
