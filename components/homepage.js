@@ -104,7 +104,61 @@ item_nice_headphones`
 
   const [p1s3_editor_code, p1s3_setEditorCode] = useState(p1s3_nice_headphones)
   const [p1s3_chart_code, p1s3_setChartCode] = useState(p1s1_general_variables + "\n" + p1s3_nice_headphones)
-  const p1s3_buildChartCode = () => p1s2_setChartCode(p1s1_editor_code + "\n" + p1s2_editor_code)
+  const p1s3_buildChartCode = () => p1s3_setChartCode(p1s1_editor_code + "\n" + p1s3_editor_code)
+
+  // Spare laptop charger
+  let p1s4_title = "Spare laptop charger"
+  let p1s4_spare_charger = `cost_spare_laptop_charger = 15 to 40 // dollars
+chance_of_default_charger_breakage_per_year = beta(1.2615450872566734, 5.967171456277175)
+// ^ 1% to 50%
+hours_needed_to_replace_it = 0.5 to 2
+value_of_avoiding_hassle_if_broken = 100 // dollars
+years_until_replacement_lost = 1 to 3
+
+value_spare_laptop_charger = chance_of_default_charger_breakage_per_year * hours_needed_to_replace_it * value_of_avoiding_hassle_if_broken * years_until_replacement_lost
+recommendation_spare_laptop_charger = mean(value_spare_laptop_charger) > mean(cost_spare_laptop_charger) ? true : false
+item_spare_laptop_charger = {
+  id: "5",
+  num_id: 5,
+  name: "Spare laptop charger (lifetime of item)",
+  cost: cost_spare_laptop_charger,
+  value: value_spare_laptop_charger,
+  recommendation: recommendation_spare_laptop_charger
+}
+item_spare_laptop_charger`
+  const [p1s4_editor_code, p1s4_setEditorCode] = useState(p1s4_spare_charger)
+  const [p1s4_chart_code, p1s4_setChartCode] = useState(p1s1_general_variables + "\n" + p1s4_spare_charger)
+  const p1s4_buildChartCode = () => p1s4_setChartCode(p1s1_editor_code + "\n" + p1s4_editor_code)
+
+  // Casio watch
+  let p1s5_title = "Spare laptop charger"
+  let p1s5_casio_watch = `cost_casio_watch = 15 to 50
+num_check_time_day = 1 to 20
+would_otherwise_check_phone = beta(1.5598524392792164, 0.36044253926611014)
+// 20% to 100% of the time
+would_otherwise_get_distracted_by_phone = beta(5.224031849460337, 3.078888443018226)
+// 30% to 90%
+duration_distraction_seconds = 15 to 60
+value_not_getting_distracted_by_phone = value_additional_free_hour * duration_distraction_seconds / 3600
+// ^ one could also input the value of no distractions directly: 0.2 to 2 // 20cts to 2 dollars
+coolness_factor = 50 to 200 
+value_casio_watch = 365 * (num_check_time_day * would_otherwise_check_phone * would_otherwise_get_distracted_by_phone * value_not_getting_distracted_by_phone) + coolness_factor
+recommendation_casio_watch = mean(value_casio_watch) > mean(cost_casio_watch) ? true : false
+
+item_casio_watch = {
+  id: "10",
+  num_id: 10,
+  name: "Watch (e.g., Casio F-91W)",
+  cost: cost_casio_watch,
+  value: value_casio_watch,
+  recommendation: recommendation_casio_watch
+}  
+
+item_casio_watch
+`
+  const [p1s5_editor_code, p1s5_setEditorCode] = useState(p1s5_casio_watch)
+  const [p1s5_chart_code, p1s5_setChartCode] = useState(p1s1_general_variables + "\n" + p1s5_casio_watch)
+  const p1s5_buildChartCode = () => p1s5_setChartCode(p1s1_editor_code + "\n" + p1s5_editor_code)
 
   return (
     <div className="grid align-self-center items-center mt-10 place-items-center">
@@ -215,6 +269,68 @@ item_nice_headphones`
         </div>
         <p>It's kind of absurd how much headphones increase my level of happiness. I also thought it was interesting that I can't afford to pay $30/hour for a 3 point improvement in a 10 point scale, if that intervention is permanent.</p>
 
+        <h3 className="mb-4">Spare laptop charger</h3>
+        <p>Here is a similar model about a spare laptop charger. A similar model would apply to an external battery for a phone.
+        </p>
+
+        <div className="grid place-items-center w-full">
+          {/* to do: wrapp in its own component, see above */}
+          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
+            <h4 className="text-lg font-bold mb-3">
+              {p1s4_title} </h4>
+            <textarea value={p1s4_editor_code}
+              readOnly={false}
+              onChange={
+                (event) => p1s4_setEditorCode(event.target.value)
+              }
+              rows={
+                countNumberOfLines(p1s4_editor_code) * 1.15 + 1
+              }
+              cols={120}
+              spellcheck={"false"}
+              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
+            <br/>
+            <button className={effectButtonStyle}
+              onClick={p1s4_buildChartCode}>
+              Run model
+            </button>
+            <DynamicSquiggleChart squiggleChartCode={p1s4_chart_code}/>
+          </div>
+        </div>
+
+        <h3 className="mb-4">Casio watch</h3>
+        <p>Here is a model of the value of a casio watch. I'm modelling most of its value as coming from reducing the number of distractions that stem from looking at the time on my phone.
+        </p>
+
+        <div className="grid place-items-center w-full">
+          {/* to do: wrapp in its own component, see above */}
+          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
+            <h4 className="text-lg font-bold mb-3">
+              {p1s5_title} </h4>
+            <textarea value={p1s5_editor_code}
+              readOnly={false}
+              onChange={
+                (event) => p1s5_setEditorCode(event.target.value)
+              }
+              rows={
+                countNumberOfLines(p1s5_editor_code) * 1.15 + 1
+              }
+              cols={120}
+              spellcheck={"false"}
+              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
+            <br/>
+            <button className={effectButtonStyle}
+              onClick={p1s5_buildChartCode}>
+              Run model
+            </button>
+            <DynamicSquiggleChart squiggleChartCode={p1s5_chart_code}/>
+          </div>
+        </div>
+        <p>But you get the idea. I've also played around with models of the value of a sleep mask, taking melatonin, having an external battery for a phone, stocking zinc lozenges, having a vertical mouse, an external microphone, or a blog. You can see some of those models
+          <a href="to do">here</a>.
+        </p>
+        <h3>Prioritization across models</h3>
+        <p>Now, one thing we can do when given these </p>
         <h2>Part II:</h2>
       </div>
     </div>
