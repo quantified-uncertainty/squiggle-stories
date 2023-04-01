@@ -195,35 +195,27 @@ item_casio_watch = {
 granularity = 5 // dollars. lower number => more accuracy, less speed
 
 items = [item_nice_computer, item_nice_headphones, item_spare_laptop_charger, item_casio_watch]
-make_diminishing_maginal_return_function_from_item(item) = {
-  item_function = {|dollar_amount|
-	  result = if dollar_amount > mean(item.cost) then mean(item.value) else 0
-     result
-	}
-  item_function
+
+n = List.length(items)
+values = List.map(items, {|item| item.value})
+costs = List.map(items, {|item| item.cost})
+
+num_options = 2^n // each item can be chosen or not
+list_of_options = List.upTo(0, num_options-1)
+can_you_afford_option = {|option|
+  is_item_1_in_it = 
 }
-
-diminishing_marginal_return_functions = List.map(items, make_diminishing_maginal_return_function_from_item)
-
-listAppend = { |xs, x|
-  n = List.length(xs)
-  temp_list = List.upTo(0,n)
-  new_list = List.map(temp_list, {|i| 
-    result = i < n ? xs[i] : x
-    result
-  })
-  new_list
-}
-
-value_n_dollars_in_dollars = {|n| n}
-
-diminishing_marginal_return_functions2 = listAppend(diminishing_marginal_return_functions, value_n_dollars_in_dollars)
-
-optimal_allocation_consumer_products = Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions(diminishing_marginal_return_functions2, budget, granularity)`
+todo="To do: choose whether to do this in Squiggle or in js"
+`
 
   const [p1s6_editor_code, p1s6_setEditorCode] = useState(p1s6_prioritizing)
   const [p1s6_chart_code, p1s6_setChartCode] = useState(joinEnter([p1s1_general_variables, p1s6_prioritizing, getItemToDisplayFromSquiggleString(p1s6_prioritizing)]))
-  const p1s6_buildChartCode = () => p1s6_setChartCode(joinEnter([p1s1_editor_code, p1s2_editor_code, p1s3_editor_code, p1s4_editor_code, p1s5_editor_code, p1s6_editor_code, getItemToDisplayFromSquiggleString(p1s6_editor_code)]))
+  const p1s6_buildChartCode = () => 
+	{
+		let temp_chart_code = (joinEnter([p1s1_editor_code, p1s2_editor_code, p1s3_editor_code, p1s4_editor_code, p1s5_editor_code, p1s6_editor_code, getItemToDisplayFromSquiggleString(p1s6_editor_code)]))
+		p1s6_setChartCode(temp_chart_code)
+		console.log(temp_chart_code)
+	}
 
   return (
     <div className="grid align-self-center items-center mt-10 place-items-center">
