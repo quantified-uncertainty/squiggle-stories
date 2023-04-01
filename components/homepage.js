@@ -220,10 +220,10 @@ getItemsInOptionBools = {|option|
   is_item_3_in_it = isDivisionExact(option_sub_2, 4)
   option_sub_3 = option_sub_2 - (is_item_3_in_it ? 4 : 0)
   
-  is_item_4_in_it = isDivisionExact(option_sub_3, 4)
+  is_item_4_in_it = isDivisionExact(option_sub_3, 8)
   option_sub_4 = option_sub_3 - (is_item_4_in_it ? 8 : 0)
 
-  is_item_5_in_it = isDivisionExact(option_sub_4, 8)
+  is_item_5_in_it = isDivisionExact(option_sub_4, 16)
   option_sub_5 = option_sub_4 - (is_item_5_in_it ? 16 : 0)
 
   result = [is_item_1_in_it, is_item_2_in_it, is_item_3_in_it, is_item_4_in_it, is_item_5_in_it]
@@ -271,7 +271,6 @@ best_affordable_option = List.reduce(list_of_options, {value_best_option: 0, ite
   result = is_new_option_superior ? ({value_best_option: value_of_new_option, items_names_best_option: item_names}) : iter
   result 
 })
-best_affordable_option
 `
 
   const [p1s6_editor_code, p1s6_setEditorCode] = useState(p1s6_prioritizing)
