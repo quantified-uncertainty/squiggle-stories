@@ -256,7 +256,7 @@ getCostOfOption = {|option|
 }
 getValueOfOption = {|option|
   items_in_option = getItemsInOption(option)
-  values = List.map(items_in_option, {|i| inv(i.value, 0.5)})
+  values = List.map(items_in_option, {|i| mean(i.value)})
   value = List.reduce(values, 0, {|a,b| a + b})
   value
 }
@@ -292,6 +292,77 @@ best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|
       getItemToDisplayFromSquiggleString(p1s6_editor_code)
     ]))
     p1s6_setChartCode(temp_chart_code)
+    console.log(temp_chart_code)
+  }
+
+  // Prioritizing across consumer interventions
+  const p1s7_title = "Prioritizing across consumer interventions, with distributional output"
+  const p1s7_prioritizing = `
+num_samples = 2
+getSomeSamples(dist) = sampleN(dist, num_samples)
+cost_samples = List.map(items, {|i| getSomeSamples(i.cost)})
+value_samples = List.map(items, {|i| getSomeSamples(i.value)})
+
+getItemsInOptionByNum = {|option|
+  bools = getItemsInOptionBools(option)
+  temp_list = List.upTo(0, n-1)
+  result = List.reduce(temp_list, [],{|iter, i| 
+    !bools[i] ? iter : listAppend(iter, i)
+  })
+  result
+}
+
+getCostOfOptionSample = {|option, i|
+  items_in_option = getItemsInOptionByNum(option)
+  costs = List.map(items_in_option, {|item| cost_samples[item][i]})
+  cost  = List.reduce(costs, 0, {|a,b| a + b})
+  cost
+}
+getValueOfOptionSample = {|option, i|
+  items_in_option = getItemsInOptionByNum(option)
+  values = List.map(items_in_option, {|item| value_samples[item][i]})
+  value  = List.reduce(values, 0, {|a,b| a + b})
+  value
+}
+
+// Get best option within budget
+getBestAffordableOptionSample(i) = {
+  best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|iter, option|
+    items_in_option = getItemsInOptionByNum(option)
+    value_of_new_option = getValueOfOptionSample(option, i)
+    cost_of_new_option = getCostOfOptionSample(option, i)
+    is_new_option_superior = (cost_of_new_option < budget) && (value_of_new_option > iter.value_best_option)
+    item_names = List.map(items_in_option, {|o| items[o].name})
+    result = is_new_option_superior ? ({value_best_option: value_of_new_option, items_names_best_option: item_names, cost_best_option: cost_of_new_option}) : iter
+    result 
+  })
+  best_affordable_option
+}
+best_affordable_option_dist = SampleSet.fromList(List.map(List.upTo(0,num_samples-1), {|_| getBestAffordableOptionSample()}))
+`
+  const [p1s7_editor_code, p1s7_setEditorCode] = useState(p1s7_prioritizing)
+  const [p1s7_chart_code, p1s7_setChartCode] = useState(joinEnter([
+    p1s1_general_variables,
+    p1s2_nice_computer,
+    p1s3_nice_headphones,
+    p1s4_spare_charger,
+    p1s5_casio_watch,
+    p1s6_prioritizing,
+    p1s7_prioritizing,
+    getItemToDisplayFromSquiggleString(p1s7_prioritizing)
+  ]))
+  const p1s7_buildChartCode = () => {
+    let temp_chart_code = (joinEnter([
+      p1s1_editor_code,
+      p1s2_editor_code,
+      p1s3_editor_code,
+      p1s4_editor_code,
+      p1s5_editor_code,
+      p1s6_editor_code,
+      p1s7_editor_code,
+      getItemToDisplayFromSquiggleString(p1s7_editor_code)
+    ]))
+    p1s7_setChartCode(temp_chart_code)
     console.log(temp_chart_code)
   }
 
@@ -519,12 +590,56 @@ best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|
           <li>Reducing one&lsquo;s earnings, to spend more time with loved ones.</li>
           <li>Reducing one&lsquo;s earnings, to spend more time on projects one considers important, but one&lsquo;s boss doesn&lsquo;t.</li>
         </ol>
-        <p>But when one tries to decide between those options, there is no longer a natural unit, like the dollar. By this I don't mean that you couldn&lsquo;t denominate the value of everything in dollars, i.e., in terms of your willingness to pay. But rather, that doing so would require more steps, more legwork and conversion factors, and that doing a good work with this isn&lsquo;t trivial. I&lsquo;ve outlined some of the work that I think would have to be done to do a principled version of this <a href="https://forum.effectivealtruism.org/posts/3hH9NRqzGam65mgPG/five-steps-for-quantifying-speculative-interventions">here</a>.</p>
+        <p>But when one tries to decide between those options, there is no longer a natural unit, like the dollar. By this I don't mean that you couldn&lsquo;t denominate the value of everything in dollars, i.e., in terms of your willingness to pay. But rather, that doing so would require more steps, more legwork and conversion factors, and that doing a good work with this isn&lsquo;t trivial. I&lsquo;ve outlined some of the work that I think would have to be done to do a principled version of this
+          <a href="https://forum.effectivealtruism.org/posts/3hH9NRqzGam65mgPG/five-steps-for-quantifying-speculative-interventions">here</a>.</p>
+        <p>But between now and that principled work being attempted and completed, there is still much to be done. In the meantime, we can use relative values. Relative values can be a few things:</p>
+        <ul>
+          <li>An ellicitation device: You can ask people how much they value something compared to some other things, and then you can process that information.</li>
+          <li>A storage medium: You can store the shape of some of the things that you value by storing their relative value, i.e., how much you value A compared to B, for many values of A and B</li>
+          <li>A complete storage medium, a representation of a utility function: If you know the relative values of A and B, for all possible As and Bs, you have a utility function!</li>
+        </ul>
+        <p>Here I'm going to mostly be talking about relative values as an ellicitation device, and as a storage medium for a
+          <i>relatively small</i>
+          amount of items. But their value would come to shine when considering
+          <i>many</i>
+          items, like
+          <a>here (to do)</a>
+        </p>
+        <p>Throughou, I'm considering that relative values are distribuions, or something akin to distributions. But previously, our estimates of the best option for optimizing consumer surplus was just one number. Let's quickly turn that into a distribution by drawing samples rather than taking the mean:</p>
 
+        <div className="grid place-items-center w-full">
+          {/* to do: wrapp in its own component, see above */}
+          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
+            <h4 className="text-lg font-bold mb-3">
+              {p1s7_title} </h4>
+            <textarea value={p1s7_editor_code}
+              readOnly={false}
+              onChange={
+                (event) => p1s7_setEditorCode(event.target.value)
+              }
+              rows={
+                countNumberOfLines(p1s7_editor_code)
+              }
+              cols={120}
+              spellcheck={"false"}
+              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
+            <br/>
+            <button className={effectButtonStyle}
+              onClick={p1s7_buildChartCode}>
+              Run model
+            </button>
+            <DynamicSquiggleChart squiggleChartCode={p1s7_chart_code}/>
+          </div>
+        </div>
         <h2>Part III: Philanthopic prioritization</h2>
 
         <h2>Part IV: What you've just read</h2>
-        <p>What you've just read the result of a few years of work at the Quantified Uncertainty Research Institute into a particular software stack. Previously, the closest that there was was something like <a href="https://www.foretold.io/c/b2412a1d-0aa4-4e37-a12a-0aca9e440a96/n/c01b0899-4100-4efd-9710-c482d89eddad">this Foretold notebook</a>, which used public distributional forecasts from Foretold, an embryonic prediction platform, and maybe things like <a href="https://www.metaculus.com/project/journal/">Metaculus journal entries</a>. Later on, we had Observable notebooks, like <a href="">this one</a> estimating the impact of the Against Malaria Foundation. Like the Observable page and unlike the Foretold or Metaculus notebooks, this page uses reusable React components, meaning that in principle anyone can replicate and use them in their own projects. In fact, you can fork this website <a href="">here</a>(note: to do).</p>
+        <p>What you've just read the result of a few years of work at the Quantified Uncertainty Research Institute into a particular software stack. Previously, the closest that there was was something like
+          <a href="https://www.foretold.io/c/b2412a1d-0aa4-4e37-a12a-0aca9e440a96/n/c01b0899-4100-4efd-9710-c482d89eddad">this Foretold notebook</a>, which used public distributional forecasts from Foretold, an embryonic prediction platform, and maybe things like
+          <a href="https://www.metaculus.com/project/journal/">Metaculus journal entries</a>. Later on, we had Observable notebooks, like
+          <a href="">this one</a>
+          estimating the impact of the Against Malaria Foundation. Like the Observable page and unlike the Foretold or Metaculus notebooks, this page uses reusable React components, meaning that in principle anyone can replicate and use them in their own projects. In fact, you can fork this website
+          <a href="">here</a>(note: to do).</p>
       </div>
     </div>
 

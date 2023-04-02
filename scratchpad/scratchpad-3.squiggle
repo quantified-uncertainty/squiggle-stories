@@ -1,0 +1,241 @@
+salary = SampleSet.fromDist(70k to 150k)
+
+value_doubling_productivity = SampleSet.fromDist(30k to 75k)
+// how much would you pay to be 100% more productive? 
+// personally, i.e., from your own salary.
+
+hours_worked_in_year = SampleSet.fromDist( (48 to 52) * (5 to 6) * (5 to 16 ))// 48 to 52 weeks, 5 to 6 days per week, 5 to 16 hours per day
+
+hours_day_in_front_of_computer = SampleSet.fromDist(8 to 14)
+
+hourly_salary = SampleSet.fromDist(salary / hours_worked_in_year)
+
+value_additional_free_hour = 30 to 150 // dollars
+cost_nice_computer = 2k to 3k
+fraction_improvement_productivity = beta(1.6308424891839157, 13.480636131095403)
+// ^ 1% to 30% (https://nunosempere.com/blog/2023/03/15/fit-beta/)
+value_from_productivity = fraction_improvement_productivity * value_doubling_productivity
+value_from_subjective_wellbeing = 1k to 5k // very uncertain
+years_of_use_nice_computer = 1 to 4
+
+value_nice_computer = (value_from_productivity + value_from_subjective_wellbeing) * years_of_use_nice_computer
+recommendation_nice_computer = mean(value_nice_computer) > mean(cost_nice_computer) ? true : false
+item_nice_computer = {
+	name: "Nice computer (e.g., MacBook pro) (lifetime of item)",
+	cost: cost_nice_computer,
+	value: value_nice_computer,
+	recommendation: recommendation_nice_computer
+}
+cost_nice_headphones = 250 to 350 // dollars
+hours_per_day_with_headphones = hours_day_in_front_of_computer
+
+hedonic_improvement_from_current_headphones = 1 to 2
+// good headphones improve by moment-to-moment experience 
+// a whole lot, i.e., listening to music moves me from a 
+// 4 to a 6 in a 1-10 scale
+
+hedonic_improvement_from_new_headphones = 1.5 to 2.2
+// pulling this number out of my ass.
+// in particular, old headphones (Senheiser) are good, but 
+// bluetooth isn't particularly great
+// and they are starting to have some problems
+
+value_hedonic_improvement_in_dollars = 1 to 10
+// value of a 1 point improvement in a 1-10 scale for 1h.
+// initial thought is
+// would pay $30/hour to go from a 5 to an 8? yeah
+// or (24-9) * 365 * (8-5) * 10 = $164,250
+// lol, I can't afford to pay $30/hour
+// for a 3 point improvement in a 1-10 scale
+// (if it was all year round)
+// this sucks
+// I'm still considering leaving the $10/1 point improvement
+// one could also adjust for hedonic treadmill?
+
+hedonic_delta_headphones = truncateLeft(hedonic_improvement_from_new_headphones - hedonic_improvement_from_current_headphones, 1)
+// the calculation of the delta is obvious, 
+// but whence the truncation?
+// well, if you don't like the new ones, you can keep the old ones
+// the truncation at 1 instead of at zero is so that relative values work.
+// but we can also pretend that it's because there is some value of information
+lifespan_headphones = ( 1 to 3 ) * 365 
+
+value_nice_headphones = hedonic_delta_headphones * hours_per_day_with_headphones * lifespan_headphones * value_hedonic_improvement_in_dollars
+recommendation_nice_headphones = mean(hedonic_delta_headphones) > mean(cost_nice_headphones) ? true : false
+item_nice_headphones = {
+  id: "2",
+  num_id: 2,
+  name: "Nice headphones (e.g., Bose 45) (lifespan of item)",
+  cost: cost_nice_headphones,
+  value: value_nice_headphones,
+  recommendation: recommendation_nice_headphones
+}
+cost_spare_laptop_charger = 15 to 40 // dollars
+chance_of_default_charger_breakage_per_year = beta(1.2615450872566734, 5.967171456277175)
+// ^ 1% to 50%
+hours_needed_to_replace_it = 0.5 to 2
+value_of_avoiding_hassle_if_broken = 100 // dollars
+years_until_replacement_lost = 1 to 3
+
+value_spare_laptop_charger = chance_of_default_charger_breakage_per_year * hours_needed_to_replace_it * value_of_avoiding_hassle_if_broken * years_until_replacement_lost
+recommendation_spare_laptop_charger = mean(value_spare_laptop_charger) > mean(cost_spare_laptop_charger) ? true : false
+item_spare_laptop_charger = {
+  id: "5",
+  num_id: 5,
+  name: "Spare laptop charger (lifetime of item)",
+  cost: cost_spare_laptop_charger,
+  value: value_spare_laptop_charger,
+  recommendation: recommendation_spare_laptop_charger
+}
+cost_casio_watch = 15 to 50
+num_check_time_day = 1 to 20
+would_otherwise_check_phone = beta(1.5598524392792164, 0.36044253926611014)
+// 20% to 100% of the time
+would_otherwise_get_distracted_by_phone = beta(5.224031849460337, 3.078888443018226)
+// 30% to 90%
+duration_distraction_seconds = 15 to 60
+value_not_getting_distracted_by_phone = value_additional_free_hour * duration_distraction_seconds / 3600
+// ^ one could also input the value of no distractions directly: 0.2 to 2 // 20cts to 2 dollars
+coolness_factor = 50 to 200 
+value_casio_watch = 365 * (num_check_time_day * would_otherwise_check_phone * would_otherwise_get_distracted_by_phone * value_not_getting_distracted_by_phone) + coolness_factor
+recommendation_casio_watch = mean(value_casio_watch) > mean(cost_casio_watch) ? true : false
+
+item_casio_watch = {
+  id: "10",
+  num_id: 10,
+  name: "Watch (e.g., Casio F-91W)",
+  cost: cost_casio_watch,
+  value: value_casio_watch,
+  recommendation: recommendation_casio_watch
+}
+budget = 2.7k
+granularity = 5 // dollars. lower number => more accuracy, less speed
+
+items = [item_nice_computer, item_nice_headphones, item_spare_laptop_charger, item_casio_watch, {name: "random lotery", value: 10 to 20, cost: 1 to 2}]
+
+n = List.length(items)
+num_options = 2^n // each item can be chosen or not
+list_of_options = List.upTo(0, num_options-1)
+
+// Helpers
+isDivisionExact = {|a,b| // a divided by b
+  multiplesOfB = List.map(List.upTo(0,20), {|x| x * b})
+  tempL = List.map(multiplesOfB, {|y| y == a})
+  result = List.reduce(tempL, false, {|iter, item| (iter || item)})
+  result
+}
+isOdd = {|x| !isDivisionExact(x, 2)}
+
+getItemsInOptionBools = {|option|
+  is_item_1_in_it = isOdd(option)
+  option_sub_1 = option - (is_item_1_in_it ? 1 : 0)
+  
+  is_item_2_in_it = isDivisionExact(option_sub_1, 2)
+  option_sub_2 = option_sub_1 - (is_item_2_in_it ? 2 : 0)
+  
+  is_item_3_in_it = isDivisionExact(option_sub_2, 4)
+  option_sub_3 = option_sub_2 - (is_item_3_in_it ? 4 : 0)
+  
+  is_item_4_in_it = isDivisionExact(option_sub_3, 8)
+  option_sub_4 = option_sub_3 - (is_item_4_in_it ? 8 : 0)
+
+  is_item_5_in_it = isDivisionExact(option_sub_4, 16)
+  option_sub_5 = option_sub_4 - (is_item_5_in_it ? 16 : 0)
+
+  result = [is_item_1_in_it, is_item_2_in_it, is_item_3_in_it, is_item_4_in_it, is_item_5_in_it]
+  result
+} // to do: do this as a reduce loop?
+
+listAppend = {|xs, x|
+  n = List.length(xs)
+  temp_list = List.upTo(0,n)
+  new_list = List.map(temp_list, {|i| 
+    result = i < n ? xs[i] : x
+    result
+  })
+  new_list
+}
+
+getItemsInOption = {|option|
+  bools = getItemsInOptionBools(option)
+  temp_list = List.upTo(0, n-1)
+  result = List.reduce(temp_list, [],{|iter, i| 
+    !bools[i] ? iter : listAppend(iter, items[i])
+  })
+  result
+}
+
+getCostOfOption = {|option|
+  items_in_option = getItemsInOption(option)
+  costs = List.map(items_in_option, {|i| mean(i.cost)})
+  cost  = List.reduce(costs, 0, {|a,b| a + b})
+  cost
+}
+getValueOfOption = {|option|
+  items_in_option = getItemsInOption(option)
+  values = List.map(items_in_option, {|i| mean(i.value)})
+  value = List.reduce(values, 0, {|a,b| a + b})
+  value
+}
+
+// Get best option within budget
+best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|iter, option|
+  value_of_new_option = getValueOfOption(option) 
+  is_new_option_superior = (getCostOfOption(option) < budget) && (getValueOfOption(option) > iter.value_best_option)
+  item_names = List.map(getItemsInOption(option), {|o| o.name})
+  result = is_new_option_superior ? ({value_best_option: value_of_new_option, items_names_best_option: item_names, cost_best_option: getCostOfOption(option)}) : iter
+  result 
+})
+
+num_samples = 100
+getSomeSamples(dist) = sampleN(dist, num_samples)
+cost_samples = List.map(items, {|i| getSomeSamples(i.cost)})
+value_samples = List.map(items, {|i| getSomeSamples(i.value)})
+
+getItemsInOptionByNum = {|option|
+  bools = getItemsInOptionBools(option)
+  temp_list = List.upTo(0, n-1)
+  result = List.reduce(temp_list, [],{|iter, i| 
+    !bools[i] ? iter : listAppend(iter, i)
+  })
+  result
+}
+
+getCostOfOptionSample = {|option, i|
+  items_in_option = getItemsInOptionByNum(option)
+  costs = List.map(items_in_option, {|item| cost_samples[item][i]})
+  cost  = List.reduce(costs, 0, {|a,b| a + b})
+  cost
+}
+getValueOfOptionSample = {|option, i|
+  items_in_option = getItemsInOptionByNum(option)
+  values = List.map(items_in_option, {|item| value_samples[item][i]})
+  value  = List.reduce(values, 0, {|a,b| a + b})
+  value
+}
+
+getBestAffordableOptionSample(i) = {
+  best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|iter, option|
+      items_in_option = getItemsInOptionByNum(option)
+      value_of_new_option = getValueOfOptionSample(option, i)
+      cost_of_new_option = getCostOfOptionSample(option, i)
+      is_new_option_superior = (cost_of_new_option < budget) && (value_of_new_option > iter.value_best_option)
+      // item_names = List.map(items_in_option, {|o| items[0].name})
+      result = is_new_option_superior ? ({
+        value_best_option: value_of_new_option, 
+        //items_names_best_option: item_names, 
+        cost_best_option: cost_of_new_option
+      }) : iter
+      result 
+    })
+  best_affordable_option
+}
+
+best_affordable_option_values_samples = List.map(List.upTo(0,num_samples-1), getBestAffordableOptionSample)
+
+
+best_affordable_option_values_dist = SampleSet.fromList(List.map(best_affordable_option_values_samples, {|s| s.value_best_option}))
+
+x=1
+
+best_affordable_option_values_dist
