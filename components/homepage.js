@@ -8,42 +8,42 @@ const effectButtonStyle = "bg-transparent m-2 hover:bg-blue-500 text-blue-700 fo
 
 const sum = xs => {
   let result = 0
-	for(let x of xs){
-		result += x
-	}
-	return result
+  for (let x of xs) {
+    result += x
+  }
+  return result
 }
 
 const countNumberOfLines = string => {
-	// to do: get numCols as a function of screensize.
-	// (see how much each component takes, from tailwinds.) 
-	let numCols = 82
-	let lines = string.split("\n")
-	let line_equivalents = lines.map(l => Math.ceil(l.length/numCols) || 1)
-	let result = sum(line_equivalents) + 1
-	return result
+  // to do: get numCols as a function of screensize.
+  // (see how much each component takes, from tailwinds.)
+  let numCols = 82
+  let lines = string.split("\n")
+  let line_equivalents = lines.map(l => Math.ceil(l.length / numCols) || 1)
+  let result = sum(line_equivalents) + 1
+  return result
   // return string.split("\n").length * 1.3
 }
 
-const getItemToDisplayFromSquiggleString = string => { 
-	// gets Squiggle code as a string, 
-	// and returns the variable to display
-	// it's going to be the last variable which was allocated.
-	// For example, if the code is x = `x = 1
-	// y = 1
-	// `
-	// then it is going to find the last =
-	// and it's going to return "y".
-	let lines = string.split("\n") 
-	let linesWithVariableAssignment = lines.filter(line => line.includes("=") && !line.includes("  ") && !line.includes("\t"))
-	let n = linesWithVariableAssignment.length 
-	let lastVariableAssignmentLine = n > 0 ? linesWithVariableAssignment[n-1] : ""
-	let result = lastVariableAssignmentLine.replace(/(\s)?=.*/, "")
-	return result 
+const getItemToDisplayFromSquiggleString = string => {
+  // gets Squiggle code as a string,
+  // and returns the variable to display
+  // it's going to be the last variable which was allocated.
+  // For example, if the code is x = `x = 1
+  // y = 1
+  // `
+  // then it is going to find the last =
+  // and it's going to return "y".
+  let lines = string.split("\n")
+  let linesWithVariableAssignment = lines.filter(line => line.includes("=") && !line.includes("  ") && !line.includes("\t"))
+  let n = linesWithVariableAssignment.length
+  let lastVariableAssignmentLine = n > 0 ? linesWithVariableAssignment[n - 1] : ""
+  let result = lastVariableAssignmentLine.replace(/(\s)?=.*/, "")
+  return result
 }
 
 const joinArrayWithLineBreaks = xs => {
-	return xs.join("\n")
+  return xs.join("\n")
 }
 const joinEnter = joinArrayWithLineBreaks
 
@@ -189,10 +189,9 @@ item_casio_watch = {
   const [p1s5_chart_code, p1s5_setChartCode] = useState(joinEnter([p1s1_general_variables, p1s5_casio_watch, getItemToDisplayFromSquiggleString(p1s5_casio_watch)]))
   const p1s5_buildChartCode = () => p1s5_setChartCode(joinEnter([p1s1_editor_code, p1s5_editor_code, getItemToDisplayFromSquiggleString(p1s5_editor_code)]))
 
-	// Prioritizing across consumer interventions
-	const p1s6_title = "Prioritizing across consumer interventions"
-	const p1s6_prioritizing = `budget = 1k
-budget = 1k
+  // Prioritizing across consumer interventions
+  const p1s6_title = "Prioritizing across consumer interventions"
+  const p1s6_prioritizing = `budget = 2.7k
 granularity = 5 // dollars. lower number => more accuracy, less speed
 
 items = [item_nice_computer, item_nice_headphones, item_spare_laptop_charger, item_casio_watch, {name: "random lotery", value: 10 to 20, cost: 1 to 2}]
@@ -249,48 +248,67 @@ getItemsInOption = {|option|
   result
 }
 
-canYouAffordOption = {|option, budget|
+getCostOfOption = {|option|
   items_in_option = getItemsInOption(option)
   costs = List.map(items_in_option, {|i| mean(i.cost)})
   cost  = List.reduce(costs, 0, {|a,b| a + b})
-  result = cost < budget
-  result
+  cost
 }
 getValueOfOption = {|option|
   items_in_option = getItemsInOption(option)
-  values = List.map(items_in_option, {|i| mean(i.value)})
+  values = List.map(items_in_option, {|i| inv(i.value, 0.5)})
   value = List.reduce(values, 0, {|a,b| a + b})
   value
 }
 
 // Get best option within budget
-best_affordable_option = List.reduce(list_of_options, {value_best_option: 0, item_names_best_option: []}, {|iter, option|
+best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|iter, option|
   value_of_new_option = getValueOfOption(option) 
-  is_new_option_superior = canYouAffordOption(option, budget) && (getValueOfOption(option) > iter.value_best_option)
+  is_new_option_superior = (getCostOfOption(option) < budget) && (getValueOfOption(option) > iter.value_best_option)
   item_names = List.map(getItemsInOption(option), {|o| o.name})
-  result = is_new_option_superior ? ({value_best_option: value_of_new_option, items_names_best_option: item_names}) : iter
+  result = is_new_option_superior ? ({value_best_option: value_of_new_option, items_names_best_option: item_names, cost_best_option: getCostOfOption(option)}) : iter
   result 
 })
 `
 
   const [p1s6_editor_code, p1s6_setEditorCode] = useState(p1s6_prioritizing)
-  const [p1s6_chart_code, p1s6_setChartCode] = useState(joinEnter([p1s1_general_variables, p1s6_prioritizing, getItemToDisplayFromSquiggleString(p1s6_prioritizing)]))
-  const p1s6_buildChartCode = () => 
-	{
-		let temp_chart_code = (joinEnter([p1s1_editor_code, p1s2_editor_code, p1s3_editor_code, p1s4_editor_code, p1s5_editor_code, p1s6_editor_code, getItemToDisplayFromSquiggleString(p1s6_editor_code)]))
-		p1s6_setChartCode(temp_chart_code)
-		console.log(temp_chart_code)
-	}
+  const [p1s6_chart_code, p1s6_setChartCode] = useState(joinEnter([
+    p1s1_general_variables,
+    p1s2_nice_computer,
+    p1s3_nice_headphones,
+    p1s4_spare_charger,
+    p1s5_casio_watch,
+    p1s6_prioritizing,
+    getItemToDisplayFromSquiggleString(p1s6_prioritizing)
+  ]))
+  const p1s6_buildChartCode = () => {
+    let temp_chart_code = (joinEnter([
+      p1s1_editor_code,
+      p1s2_editor_code,
+      p1s3_editor_code,
+      p1s4_editor_code,
+      p1s5_editor_code,
+      p1s6_editor_code,
+      getItemToDisplayFromSquiggleString(p1s6_editor_code)
+    ]))
+    p1s6_setChartCode(temp_chart_code)
+    console.log(temp_chart_code)
+  }
 
   return (
     <div className="grid align-self-center items-center mt-10 place-items-center">
       <div className="w-9/12">
         <h1 className="font-bold mb-4">A story about values and tradeoffs</h1>
+        <p>This is piece showcases some estimation technology that we've been developing at the Quantified Uncertainty Research Institute. It starts by considering consumer choices at my current margin of consumption. It starts that way not because estimating the consumer surplus of products is particularly important or valuable, but because it is easy. In particular, consumption under capitalism provides a really nice framework for making tradeoffs. After estimating consumer surplus, I&rsquo;ll move to more complicated choices: chosing across life options and philanthropic prioritization.
+        </p>
+        <p>All text fields are editable, and their new values will be computed once you click the &ldquo;Run model&rdquo; buttons. You reader might want to edit these fields to capture what you value as you follow along.
+        </p>
         <h2 className="mb-4">Part I: Consumerism</h2>
 
         <p>In my extended social circle, people sometimes make lists of &ldquo;things you should buy&rdquo;. My friend Gavin has gathered a list of such lists&nbsp;
-          <a href="https://www.gleech.org/stuff">here</a>. I&rsquo;m going to go over a few of the items on those lists, and estimate their value. And I&rsquo;m starting this story that way not because estimating the consumer surplus of products is particularly important, but because it is easy and intersting. 
-		</p><p>But before I get started, first I&rsquo;ll first have to set some variables, and determine how much I value a few things relative to each other. If you want to follow along, you can edit these to correspond to your values:</p>
+          <a href="https://www.gleech.org/stuff">here</a>. I&rsquo;m going to go over a few of the items on those lists, and estimate their value.
+        </p>
+        <p>But before I get started, first I&rsquo;ll first have to set some variables, and determine how much I value a few things relative to each other.</p>
 
         <div className="grid place-items-center w-full">
           {/* I'm going to repeat this piece of code a few times, 
@@ -418,7 +436,7 @@ best_affordable_option = List.reduce(list_of_options, {value_best_option: 0, ite
               Run model
             </button>
             <DynamicSquiggleChart squiggleChartCode={p1s4_chart_code}/>
-            </div>
+          </div>
         </div>
 
         <h3 className="mb-4">Casio watch</h3>
@@ -453,7 +471,8 @@ best_affordable_option = List.reduce(list_of_options, {value_best_option: 0, ite
           <a href="to do">here</a>.
         </p>
         <h3 className="mb-4">Prioritization across options</h3>
-        <p>Now, one thing we can do when given these estimates is to prioritize across them. That is, if you have a finite budget and want to extract as much value from the above consumer products, what should you buy? To solve this, we are going to use a pretty general function baked into Squiggle: <code>Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions</code>.</p>
+        <p>Now, one thing we can do when given these estimates is to prioritize across them. That is, if you have a finite budget and want to extract as much value from the above consumer products, what should you buy? To solve this, we are going to use a pretty general function baked into Squiggle:
+          <code>Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions</code>.</p>
 
         <div className="grid place-items-center w-full">
           {/* to do: wrapp in its own component, see above */}
@@ -479,9 +498,33 @@ best_affordable_option = List.reduce(list_of_options, {value_best_option: 0, ite
             <DynamicSquiggleChart squiggleChartCode={p1s6_chart_code}/>
           </div>
         </div>
-				<p>What this code is saying is that the value of buying a product is 0 if we pay below the cost of the product, and some summary statistic of the estimate of value we computed above. And this is enough enough for out very general <code>Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions</code>function to do its work. Note that that function is overkill. In Spanish we have an expression which is &ldquo;matar mosquitos a cañonazos&rdquo;, namely, &ldquo;to kill mosquitos with cannonballs&rdqup;, and the expression might apply here.</p>
-		<p>We could also use a more conservative summary function for the purposes of our decisions. For instance, if we wanted to be conservative, instead of using <code>mean(dist)</code> we could use <code>inv(dist, 0.3)</code>, i.e., get the value of a distribution at its 30% confidence interval.</p>
-        <h2>Part II:</h2>
+        <p>What the above code is doing is to try all possible combinations of items, and then see if they are under our budget, and if they beat the previous best option. That code is a bit stilted: because Squiggle doesn't yet have great escape hatches into JavaScript, I'm having to do things like define an "append" function.</p>
+        <p>We could also use a more conservative summary function for the purposes of our decisions. For instance, in the
+          <code>getValueOfOption</code>
+          function, instead of
+          <code>mean(i.value)</code>
+          we could use
+          <code>inv(i.value, 0.5)</code>, i.e., rather than getting the expected value of an option we could get its median. You can try that now if you want.</p>
+        <p>I've also chosen the budget to be
+          <code>2.7k</code>
+          because that&lsquo;s close to an inflection point. Maybe try moving it  a few hundred up and a few hundred down and see what changes.</p>
+        <h2>Part II: Life choices</h2>
+        <p>One trouble with the above section is that it may apply to a much lesser extent if you&lsquo;re not a bored techie earning $100k a year. More broadly, consumption choices like the above are only a narrow slice of the set of choices that one has to make across one lifetime.</p>
+        <p>Some of the other choices one has to make are, for example, between:</p>
+        <ol>
+          <li>Using one&lsquo;s budget for personal consumption.</li>
+          <li>Using one&lsquo;s budget for normal altruistic efforts, like donating to a local soup kitchen.</li>
+          <li>Using one&lsquo;s budget for altruistic efforts which might be more effective, like donating to the Against Malaria Foundation.</li>
+          <li>Using on&lsquo;s budget to build up one&lsquo;s savings, to preserve optionality.</li>
+          <li>Reducing one&lsquo;s earnings, to spend more time with loved ones.</li>
+          <li>Reducing one&lsquo;s earnings, to spend more time on projects one considers important, but one&lsquo;s boss doesn&lsquo;t.</li>
+        </ol>
+        <p>But when one tries to decide between those options, there is no longer a natural unit, like the dollar. By this I don't mean that you couldn&lsquo;t denominate the value of everything in dollars, i.e., in terms of your willingness to pay. But rather, that doing so would require more steps, more legwork and conversion factors, and that doing a good work with this isn&lsquo;t trivial. I&lsquo;ve outlined some of the work that I think would have to be done to do a principled version of this <a href="https://forum.effectivealtruism.org/posts/3hH9NRqzGam65mgPG/five-steps-for-quantifying-speculative-interventions">here</a>.</p>
+
+        <h2>Part III: Philanthopic prioritization</h2>
+
+        <h2>Part IV: What you've just read</h2>
+        <p>What you've just read the result of a few years of work at the Quantified Uncertainty Research Institute into a particular software stack. Previously, the closest that there was was something like <a href="https://www.foretold.io/c/b2412a1d-0aa4-4e37-a12a-0aca9e440a96/n/c01b0899-4100-4efd-9710-c482d89eddad">this Foretold notebook</a>, which used public distributional forecasts from Foretold, an embryonic prediction platform, and maybe things like <a href="https://www.metaculus.com/project/journal/">Metaculus journal entries</a>. Later on, we had Observable notebooks, like <a href="">this one</a> estimating the impact of the Against Malaria Foundation. Like the Observable page and unlike the Foretold or Metaculus notebooks, this page uses reusable React components, meaning that in principle anyone can replicate and use them in their own projects. In fact, you can fork this website <a href="">here</a>(note: to do).</p>
       </div>
     </div>
 

@@ -23,6 +23,8 @@ This repository contains a story about relative values. It is built on top of [t
 - [ ] wrap mean(mixture(d)) into its own function, called something like numberOrDistributionIntoDistribution. 
 - [ ] Debug marginal returns function
 - [ ] Build alternative optimization function. Maybe iterate though all possible choices.
+- [ ] Add disclaimer about consumer choices being a limited but fruitful frame. 
+- [ ] Add something so that consumption adds up to ~3k?
 
 ## Built with
 
