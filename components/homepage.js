@@ -619,8 +619,20 @@ best_values = SampleSet.fromList(
             <DynamicSquiggleChart squiggleChartCode={p1s7_chart_code}/>
           </div>
         </div>
+        <p>Sketch of rest of section:</p>
+				<ol>
+					<li>Relative values between different options</li>
+					<li>Graph/table/grid showing the relative values (requires relative values visualizations from other work to be reusable.</li>
+					<li>Mention that this work could be more ambitious, and could be most useful when estimating many other things.</li>
+				</ol>
         <h2>Part III: Philanthopic prioritization</h2>
-
+        <p>Sketch of rest of section:</p>
+				<ol>
+					<li>Explain a use case where relative values could be very useful, e.g., using relative values instead of worldview diversification.</li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ol>
         <h2>Part IV: What you've just read</h2>
         <p>What you've just read the result of a few years of work at the Quantified Uncertainty Research Institute into a particular software stack. Previously, the closest that there was was something like
           <a href="https://www.foretold.io/c/b2412a1d-0aa4-4e37-a12a-0aca9e440a96/n/c01b0899-4100-4efd-9710-c482d89eddad">this Foretold notebook</a>, which used public distributional forecasts from Foretold, an embryonic prediction platform, and maybe things like
@@ -628,8 +640,8 @@ best_values = SampleSet.fromList(
           <a href="">this one</a>
           estimating the impact of the Against Malaria Foundation. Like the Observable page and unlike the Foretold or Metaculus notebooks, this page uses reusable React components, meaning that in principle anyone can replicate and use them in their own projects. In fact, you can fork this website
           <a href="">here</a>(note: to do).</p>
+					<p>Some other explanations and disclaimers.</p>
       </div>
     </div>
-
   );
 }
