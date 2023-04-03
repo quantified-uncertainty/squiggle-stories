@@ -297,12 +297,10 @@ best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|
 
   // Prioritizing across consumer interventions
   const p1s7_title = "Prioritizing across consumer interventions, with distributional output"
-  const p1s7_prioritizing = `
-num_samples = 2
-getSomeSamples(dist) = sampleN(dist, num_samples)
-cost_samples = List.map(items, {|i| getSomeSamples(i.cost)})
-value_samples = List.map(items, {|i| getSomeSamples(i.value)})
-
+  const p1s7_prioritizing = `// Helpers  
+item_value_dists = List.map(items, {|i| i.value})
+item_cost_dists = List.map(items, {|i| i.cost})
+listSum(xs) = List.reduce(xs, 0, {|a,b| a + b})
 getItemsInOptionByNum = {|option|
   bools = getItemsInOptionBools(option)
   temp_list = List.upTo(0, n-1)
@@ -312,45 +310,35 @@ getItemsInOptionByNum = {|option|
   result
 }
 
-getCostOfOptionSample = {|option, i|
-  items_in_option = getItemsInOptionByNum(option)
-  costs = List.map(items_in_option, {|item| cost_samples[item][i]})
-  cost  = List.reduce(costs, 0, {|a,b| a + b})
-  cost
-}
-getValueOfOptionSample = {|option, i|
-  items_in_option = getItemsInOptionByNum(option)
-  values = List.map(items_in_option, {|item| value_samples[item][i]})
-  value  = List.reduce(values, 0, {|a,b| a + b})
-  value
-}
-
-// Get best option within budget
+// Main
 getBestAffordableOptionSample(i) = {
-  best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|iter, option|
-    items_in_option = getItemsInOptionByNum(option)
-    value_of_new_option = getValueOfOptionSample(option, i)
-    cost_of_new_option = getCostOfOptionSample(option, i)
-    is_new_option_superior = (cost_of_new_option < budget) && (value_of_new_option > iter.value_best_option)
-    item_names = List.map(items_in_option, {|o| items[o].name})
-    result = is_new_option_superior ? ({value_best_option: value_of_new_option, items_names_best_option: item_names, cost_best_option: cost_of_new_option}) : iter
-    result 
-  })
+  item_value_samples = List.map(item_value_dists, sample)
+  item_cost_samples = List.map(item_cost_dists, sample)
+  best_affordable_option = List.reduce(list_of_options, {best: 0, num: -1}, {|iter, option|
+      items_in_option = getItemsInOptionByNum(option)
+      value_of_new_option = listSum(List.map(items_in_option, {|i| item_value_samples[i]}))
+      cost_of_new_option = listSum(List.map(items_in_option, {|i| item_cost_samples[i]}))
+      
+      is_new_option_superior = (cost_of_new_option < budget) && (value_of_new_option > iter.best)
+      // item_names = List.map(items_in_option, {|o| items[0].name})
+      result = is_new_option_superior ? 
+        {best: value_of_new_option, num: option} : iter
+      result 
+    })
   best_affordable_option
 }
-best_affordable_option_dist = SampleSet.fromList(List.map(List.upTo(0,num_samples-1), {|_| getBestAffordableOptionSample()}))
+
+num_samples = 1000
+best_affordable_option_values_samples = List.map(List.upTo(0,num_samples-1), getBestAffordableOptionSample)
+best_values = SampleSet.fromList(
+  List.map(
+    best_affordable_option_values_samples,
+    {|x| x.best}
+  )
+)
 `
   const [p1s7_editor_code, p1s7_setEditorCode] = useState(p1s7_prioritizing)
-  const [p1s7_chart_code, p1s7_setChartCode] = useState(joinEnter([
-    p1s1_general_variables,
-    p1s2_nice_computer,
-    p1s3_nice_headphones,
-    p1s4_spare_charger,
-    p1s5_casio_watch,
-    p1s6_prioritizing,
-    p1s7_prioritizing,
-    getItemToDisplayFromSquiggleString(p1s7_prioritizing)
-  ]))
+  const [p1s7_chart_code, p1s7_setChartCode] = useState(`caveat = "Model takes around 20s, run with care."`)
   const p1s7_buildChartCode = () => {
     let temp_chart_code = (joinEnter([
       p1s1_editor_code,

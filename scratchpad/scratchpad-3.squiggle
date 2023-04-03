@@ -187,10 +187,6 @@ best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|
   result 
 })
 
-num_samples = 100
-getSomeSamples(dist) = sampleN(dist, num_samples)
-cost_samples = List.map(items, {|i| getSomeSamples(i.cost)})
-value_samples = List.map(items, {|i| getSomeSamples(i.value)})
 
 getItemsInOptionByNum = {|option|
   bools = getItemsInOptionBools(option)
@@ -201,41 +197,33 @@ getItemsInOptionByNum = {|option|
   result
 }
 
-getCostOfOptionSample = {|option, i|
-  items_in_option = getItemsInOptionByNum(option)
-  costs = List.map(items_in_option, {|item| cost_samples[item][i]})
-  cost  = List.reduce(costs, 0, {|a,b| a + b})
-  cost
-}
-getValueOfOptionSample = {|option, i|
-  items_in_option = getItemsInOptionByNum(option)
-  values = List.map(items_in_option, {|item| value_samples[item][i]})
-  value  = List.reduce(values, 0, {|a,b| a + b})
-  value
-}
+item_value_dists = List.map(items, {|i| i.value})
+item_cost_dists = List.map(items, {|i| i.cost})
+listSum(xs) = List.reduce(xs, 0, {|a,b| a + b})
 
 getBestAffordableOptionSample(i) = {
-  best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|iter, option|
+  item_value_samples = List.map(item_value_dists, sample)
+  item_cost_samples = List.map(item_cost_dists, sample)
+  best_affordable_option = List.reduce(list_of_options, {best: 0, num: -1}, {|iter, option|
       items_in_option = getItemsInOptionByNum(option)
-      value_of_new_option = getValueOfOptionSample(option, i)
-      cost_of_new_option = getCostOfOptionSample(option, i)
-      is_new_option_superior = (cost_of_new_option < budget) && (value_of_new_option > iter.value_best_option)
+      value_of_new_option = listSum(List.map(items_in_option, {|i| item_value_samples[i]}))
+      cost_of_new_option = listSum(List.map(items_in_option, {|i| item_cost_samples[i]}))
+      
+      is_new_option_superior = (cost_of_new_option < budget) && (value_of_new_option > iter.best)
       // item_names = List.map(items_in_option, {|o| items[0].name})
-      result = is_new_option_superior ? ({
-        value_best_option: value_of_new_option, 
-        //items_names_best_option: item_names, 
-        cost_best_option: cost_of_new_option
-      }) : iter
+      result = is_new_option_superior ? 
+        {best: value_of_new_option, num: option} : iter
       result 
     })
   best_affordable_option
 }
 
+num_samples = 1000
 best_affordable_option_values_samples = List.map(List.upTo(0,num_samples-1), getBestAffordableOptionSample)
-
-
-best_affordable_option_values_dist = SampleSet.fromList(List.map(best_affordable_option_values_samples, {|s| s.value_best_option}))
-
-x=1
-
-best_affordable_option_values_dist
+best_values = SampleSet.fromList(
+  List.map(
+    best_affordable_option_values_samples,
+    {|x| x.best}
+  )
+)
+best_values
