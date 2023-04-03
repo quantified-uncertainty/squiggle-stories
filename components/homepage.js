@@ -69,7 +69,7 @@ value_additional_free_hour = 30 to 150 // dollars`
 
   // Nice computer (e.g., MacBook Pro)
   let p1s2_title = "Nice computer"
-  let p1s2_nice_computer = `cost_nice_computer = 2k to 3k
+  let p1s2_nice_computer = `cost_nice_computer = 1k to 3k
 fraction_improvement_productivity = beta(1.6308424891839157, 13.480636131095403)
 // ^ 1% to 30% (https://nunosempere.com/blog/2023/03/15/fit-beta/)
 value_from_productivity = fraction_improvement_productivity * value_doubling_productivity
