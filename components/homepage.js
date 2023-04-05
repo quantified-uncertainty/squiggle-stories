@@ -358,7 +358,7 @@ best_values = SampleSet.fromList(
     <div className="grid align-self-center items-center mt-10 place-items-center">
       <div className="w-9/12">
         <h1 className="font-bold mb-4">Prioritizing consumption at $100k/year</h1>
-        <p>This piece showcases some web technology for estimation that we've been developing at the Quantified Uncertainty Research Institute. To do so, I'm presenting some estimates of the value that some consumer products would produce for someone with an earning power of around $100k. I'm doing this not because estimating the consumer surplus of products is particularly important or valuable, but because it is easy. In particular, consumption under capitalism provides a self-contained, simple framework for making tradeoffs.
+        <p>This piece showcases some web technology for estimation that we've been developing at the Quantified Uncertainty Research Institute. To do so, I'm presenting some estimates of the value that some consumer products would produce for someone with an earning power of around $100k. I'm doing this not because estimating the consumer surplus of products is maximally important, but because it is easy. In particular, consumption under capitalism provides a self-contained, simple framework for making tradeoffs.
         </p>
         <p>All text fields are editable, and their new values will be computed once you click the &ldquo;Run model&rdquo; buttons. You reader might want to edit these fields to capture what you value as you follow along.
         </p>
@@ -607,9 +607,9 @@ best_values = SampleSet.fromList(
           <a href="">this one</a>
           &nbsp;estimating the impact of the Against Malaria Foundation.</p>
         <p>Like the Observable page and unlike the Foretold or Metaculus notebooks, this page uses reusable React components, meaning that in principle anyone can replicate and use them in their own projects. In fact, you can fork this website&nbsp;
-          <a href="">here</a>
+          <a href="https://github.com/quantified-uncertainty/squiggle-stories">here</a>
         </p>
-        <p>Some other explanations and disclaimers.</p>
+        <p>Initially, I had high plans for this piece: I was planning on building up from consumption tradeoffs to other kinds of tradeoffs, to doing philanthropic prioritization with relative values, which is the current research agenda at QURI. Those plans are for now put on hold, but I hope this piece gave some hints about what better estimation technology on the web could look like.</p>
       </div>
     </div>
   );

@@ -4,9 +4,19 @@ This repository contains a story about relative values. It is built on top of [t
 
 ## Roadmap
 
+### Storytelling-wise
+
+For this release:
+
 - [x] Sketch how the output will look
 - [x] Get a skeleton working
-- [ ] Add a few estimates of value of consumption
+- [x] Add a few estimates of value of consumption
+- [x] Build alternative optimization function. Maybe iterate though all possible choices.
+- [x] Add disclaimer about consumer choices being a limited but fruitful frame. 
+- [x] Add something so that consumption adds up to ~3k?
+
+For future work:
+
 - [ ] Add estimates of alternatives to consumption
   - [ ] Using a cool relative values graph
   - [ ] Using a relative values table
@@ -21,10 +31,11 @@ This repository contains a story about relative values. It is built on top of [t
     - [x] Did a quickfix with countNumberOfLines instead
     - [ ] Could make the fix better by calculating numCols from window properties. 
 - [ ] wrap mean(mixture(d)) into its own function, called something like numberOrDistributionIntoDistribution. 
-- [ ] Debug marginal returns function
-- [ ] Build alternative optimization function. Maybe iterate though all possible choices.
-- [ ] Add disclaimer about consumer choices being a limited but fruitful frame. 
-- [ ] Add something so that consumption adds up to ~3k?
+
+### Technology-stack wise
+
+- [ ] Push for a new release of Squiggle to be pushed to npm
+- [ ] Adopt the new Squiggle release, which should be a bit more nifty.
 
 ## Built with
 
