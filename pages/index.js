@@ -14,7 +14,7 @@ export default function Home() {
   return <div className="flex-grid">
         <h1 className="font-bold mb-4">Index of Squiggle Stories</h1>
     <div className="w-11/12">
-      <p><a href="/consumer-surplus">Prioritizing consumption at $100k/year</a></p>
+      <p><a href="/consumer-surplus">Things you should buy, quantified</a></p>
     </div>
   </div>
 }

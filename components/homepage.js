@@ -357,7 +357,7 @@ best_values = SampleSet.fromList(
   return (
     <div className="grid align-self-center items-center mt-10 place-items-center">
       <div className="w-9/12">
-        <h1 className="font-bold mb-4">Prioritizing consumption at $100k/year</h1>
+        <h1 className="font-bold mb-4">Things you should buy, quantified</h1>
         <p>This piece showcases some web technology for estimation that we've been developing at the Quantified Uncertainty Research Institute. To do so, I'm presenting some estimates of the value that some consumer products would produce for someone with an earning power of around $100k. I'm doing this not because estimating the consumer surplus of products is maximally important, but because it is easy. In particular, consumption under capitalism provides a self-contained, simple framework for making tradeoffs.
         </p>
         <p>All text fields are editable, and their new values will be computed once you click the &ldquo;Run model&rdquo; buttons. You reader might want to edit these fields to capture what you value as you follow along.
