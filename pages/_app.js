@@ -10,7 +10,7 @@ function MyApp({Component, pageProps}) {
             {/* Webpage name & favicon */}
             <div className="mt-0">
                 <Head>
-                    <title>Squiggle tweaker</title>
+                    <title>Squiggle stories</title>
                     <link rel="icon" href="/favicon.ico"/>
                 </Head>
                 {/* Content */}
