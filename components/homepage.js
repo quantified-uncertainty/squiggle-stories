@@ -382,7 +382,7 @@ best_values = SampleSet.fromList(
                 countNumberOfLines(p1s1_editor_code)
               }
               cols={120}
-              spellcheck={"false"}
+              spellCheck={"false"}
               className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
             <br/>
             <button className={effectButtonStyle}
@@ -412,7 +412,7 @@ best_values = SampleSet.fromList(
                 countNumberOfLines(p1s2_editor_code)
               }
               cols={120}
-              spellcheck={"false"}
+              spellCheck={"false"}
               className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
             <br/>
             <button className={effectButtonStyle}
@@ -453,7 +453,7 @@ best_values = SampleSet.fromList(
                 countNumberOfLines(p1s3_editor_code)
               }
               cols={120}
-              spellcheck={"false"}
+              spellCheck={"false"}
               className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
             <br/>
             <button className={effectButtonStyle}
@@ -483,7 +483,7 @@ best_values = SampleSet.fromList(
                 countNumberOfLines(p1s4_editor_code)
               }
               cols={120}
-              spellcheck={"false"}
+              spellCheck={"false"}
               className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
             <br/>
             <button className={effectButtonStyle}
@@ -512,7 +512,7 @@ best_values = SampleSet.fromList(
                 countNumberOfLines(p1s5_editor_code)
               }
               cols={120}
-              spellcheck={"false"}
+              spellCheck={"false"}
               className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
             <br/>
             <button className={effectButtonStyle}
@@ -543,7 +543,7 @@ best_values = SampleSet.fromList(
                 countNumberOfLines(p1s6_editor_code)
               }
               cols={120}
-              spellcheck={"false"}
+              spellCheck={"false"}
               className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
             <br/>
             <button className={effectButtonStyle}
@@ -590,7 +590,7 @@ best_values = SampleSet.fromList(
                 countNumberOfLines(p1s7_editor_code)
               }
               cols={120}
-              spellcheck={"false"}
+              spellCheck={"false"}
               className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
             <br/>
             <button className={effectButtonStyle}
