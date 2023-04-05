@@ -191,7 +191,7 @@ item_casio_watch = {
 
   // Prioritizing across consumer interventions
   const p1s6_title = "Prioritizing across consumer interventions"
-  const p1s6_prioritizing = `budget = 2.7k
+  const p1s6_prioritizing = `budget = 2.1k
 granularity = 5 // dollars. lower number => more accuracy, less speed
 
 items = [item_nice_computer, item_nice_headphones, item_spare_laptop_charger, item_casio_watch, {name: "random lotery", value: 10 to 20, cost: 1 to 2}]
@@ -357,17 +357,13 @@ best_values = SampleSet.fromList(
   return (
     <div className="grid align-self-center items-center mt-10 place-items-center">
       <div className="w-9/12">
-        <h1 className="font-bold mb-4">A story about values and tradeoffs</h1>
-        <p>This is piece showcases some estimation technology that we've been developing at the Quantified Uncertainty Research Institute. It starts by considering consumer choices at my current margin of consumption. It starts that way not because estimating the consumer surplus of products is particularly important or valuable, but because it is easy. In particular, consumption under capitalism provides a really nice framework for making tradeoffs. After estimating consumer surplus, I&rsquo;ll move to more complicated choices: chosing across life options and philanthropic prioritization.
+        <h1 className="font-bold mb-4">Prioritizing consumption at $100k/year</h1>
+        <p>This piece showcases some web technology for estimation that we've been developing at the Quantified Uncertainty Research Institute. To do so, I'm presenting some estimates of the value that some consumer products would produce for someone with an earning power of around $100k. I'm doing this not because estimating the consumer surplus of products is particularly important or valuable, but because it is easy. In particular, consumption under capitalism provides a self-contained, simple framework for making tradeoffs.
         </p>
         <p>All text fields are editable, and their new values will be computed once you click the &ldquo;Run model&rdquo; buttons. You reader might want to edit these fields to capture what you value as you follow along.
         </p>
-        <h2 className="mb-4">Part I: Consumerism</h2>
-
-        <p>In my extended social circle, people sometimes make lists of &ldquo;things you should buy&rdquo;. My friend Gavin has gathered a list of such lists&nbsp;
-          <a href="https://www.gleech.org/stuff">here</a>. I&rsquo;m going to go over a few of the items on those lists, and estimate their value.
-        </p>
-        <p>But before I get started, first I&rsquo;ll first have to set some variables, and determine how much I value a few things relative to each other.</p>
+        <p>The background for this is that in my extended social circle, people sometimes make lists of &ldquo;things you should buy&rdquo;. My friend Gavin has gathered a list of such lists&nbsp;
+          <a href="https://www.gleech.org/stuff">here</a>. So I&rsquo;m going to go over a few of the items on those lists, and estimate their value. First, I&rsquo;ll have to set some variables, and determine how much I value a few general classes of things relative to each other:</p>
 
         <div className="grid place-items-center w-full">
           {/* I'm going to repeat this piece of code a few times, 
@@ -400,7 +396,7 @@ best_values = SampleSet.fromList(
         </div>
 
         <h3 className="mb-4">A nice computer</h3>
-        <p>With the above variables in mind, here is how much I think I value a nice computer, i.e., my current computer, or a not-too-new Macbook:</p>
+        <p>With the above variables in mind, here is how much I would value a nice computer, i.e., my current computer, or a not-too-new Macbook:</p>
 
         <div className="grid place-items-center w-full">
           {/* to do: wrapp in its own component, see above */}
@@ -428,12 +424,12 @@ best_values = SampleSet.fromList(
         </div>
         <p>Some points of order about that model:</p>
         <ol>
-          <li>The value term represents my consumer surplus, in dollars. But I would generally be willing to pay less than the consumer surplus for any particular item, because I could always switch to a competition, and because there are other competing products that also make a bid on my finite budget.</li>
-          <li>The beta term has a lot of unnecessary decimal points. I am mildly averse to deleting decimal points. The origin of these decimal points is
+          <li>The value term represents consumer surplus, in dollars. But one would generally be willing to pay less than the consumer surplus for any particular computer brand, because one could always switch to a competitor, and because there are other competing products that also make a bid on a finite budget.</li>
+          <li>The beta term has a lot of unnecessary decimal points. I am mildly averse to deleting decimal points. The origin of these decimal points is&nbsp;
             <a href="https://nunosempere.com/blog/2023/03/15/fit-beta/">this tool</a>
-            to find a beta distribution which fits a 90% confidence interval. In the future, finding a beta that fits a given confidence interval will probably be incorporated into the core Squiggle syntax, but we haven't figured out how yet. See
+            &nbsp;to find a beta distribution which fits a 90% confidence interval. In the future, finding a beta that fits a given confidence interval will probably be incorporated into the core Squiggle syntax&mdash;the language that I'm using to run these estimations&mdash;but we haven't figured out how yet. See&nbsp;
             <a href="https://github.com/quantified-uncertainty/squiggle/issues/1615">this issue</a>
-            for discussion.</li>
+            &nbsp;for discussion.</li>
           <li>That model reuses the general variables we outlined at the beginning.
           </li>
         </ol>
@@ -467,7 +463,7 @@ best_values = SampleSet.fromList(
             <DynamicSquiggleChart squiggleChartCode={p1s3_chart_code}/>
           </div>
         </div>
-        <p>It's kind of absurd how much headphones increase my level of happiness. I also thought it was interesting that I can't afford to pay $30/hour for a 3 point improvement in a 10 point scale, if that intervention is permanent.</p>
+        <p>It's kind of absurd how much headphones increase my level of happiness. I also thought it was interesting that someone with a $100k/year salary can't afford to pay $30/hour for a 3 point improvement in a 10 point scale, if that intervention is permanent.</p>
 
         <h3 className="mb-4">Spare laptop charger</h3>
         <p>Here is a similar model about a spare laptop charger. A similar model would apply to an external battery for a phone.
@@ -499,7 +495,7 @@ best_values = SampleSet.fromList(
         </div>
 
         <h3 className="mb-4">Casio watch</h3>
-        <p>Here is a model of the value of a casio watch. I'm modelling most of its value as coming from reducing the number of distractions that stem from looking at the time on my phone.
+        <p>Here is a model of the value of a casio watch. I'm modelling most of its value as coming from reducing the number of distractions that stem from looking at the time on one's phone.
         </p>
 
         <div className="grid place-items-center w-full">
@@ -529,9 +525,9 @@ best_values = SampleSet.fromList(
         <p>But you get the idea. I've also played around with models of the value of a sleep mask, taking melatonin, having an external battery for a phone, stocking zinc lozenges, having a vertical mouse, an external microphone, or a blog. You can see some of those models
           <a href="to do">here</a>.
         </p>
-        <h3 className="mb-4">Prioritization across options</h3>
-        <p>Now, one thing we can do when given these estimates is to prioritize across them. That is, if you have a finite budget and want to extract as much value from the above consumer products, what should you buy? To solve this, we are going to use a pretty general function baked into Squiggle:
-          <code>Danger.optimalAllocationGivenDiminishingMarginalReturnsForManyFunctions</code>.</p>
+        <h3 className="mb-4">Prioritization across consumption choices</h3>
+        <p>Now, one thing we can do when given these estimates is to prioritize across them. That is, if you have a finite budget allocated to consumption and want to extract as much value from the above consumer products, what should you buy? I'm going to just paste some code and then make some comments about it:
+        </p>
 
         <div className="grid place-items-center w-full">
           {/* to do: wrapp in its own component, see above */}
@@ -557,18 +553,19 @@ best_values = SampleSet.fromList(
             <DynamicSquiggleChart squiggleChartCode={p1s6_chart_code}/>
           </div>
         </div>
-        <p>What the above code is doing is to try all possible combinations of items, and then see if they are under our budget, and if they beat the previous best option. That code is a bit stilted: because Squiggle doesn't yet have great escape hatches into JavaScript, I'm having to do things like define an "append" function.</p>
-        <p>We could also use a more conservative summary function for the purposes of our decisions. For instance, in the
+        <p>What the above code is doing is to try all possible combinations of items, and then see if they are under our budget, and if they beat the previous best option. That code is a bit stilted: because Squiggle doesn't yet have great escape hatches into JavaScript, I'm having to do things like define an "append" function. Though more list functions should be added in the &nbsp;<a href="https://github.com/quantified-uncertainty/squiggle/pull/1669">next release of Squiggle</a>.</p>
+        <p>We could also use a more conservative summary function for the purposes of our decisions. For instance, in the&nbsp;
           <code>getValueOfOption</code>
-          function, instead of
+          &nbsp;function, instead of&nbsp;
           <code>mean(i.value)</code>
-          we could use
+          &nbsp;we could use&nbsp;
           <code>inv(i.value, 0.5)</code>, i.e., rather than getting the expected value of an option we could get its median. You can try that now if you want.</p>
-        <p>I've also chosen the budget to be
-          <code>2.7k</code>
-          because that&lsquo;s close to an inflection point. Maybe try moving it  a few hundred up and a few hundred down and see what changes.</p>
-        <h2>Part II: Life choices</h2>
-        <p>One trouble with the above section is that it may apply to a much lesser extent if you&lsquo;re not a bored techie earning $100k a year. More broadly, consumption choices like the above are only a narrow slice of the set of choices that one has to make across one lifetime.</p>
+        <p>I've also chosen the budget to be&nbsp;
+          <code>2.1k</code>
+          &nbsp;because that&lsquo;s close to an inflection point. Maybe try moving it  a few hundred up and a few hundred down and see what changes.</p>
+
+        <h3 className="mb-4">Prioritization between consumption and other choices.</h3>
+        <p>More broadly, consumption choices like the above are only a narrow slice of the set of choices that one has to make across one lifetime.</p>
         <p>Some of the other choices one has to make are, for example, between:</p>
         <ol>
           <li>Using one&lsquo;s budget for personal consumption.</li>
@@ -578,23 +575,7 @@ best_values = SampleSet.fromList(
           <li>Reducing one&lsquo;s earnings, to spend more time with loved ones.</li>
           <li>Reducing one&lsquo;s earnings, to spend more time on projects one considers important, but one&lsquo;s boss doesn&lsquo;t.</li>
         </ol>
-        <p>But when one tries to decide between those options, there is no longer a natural unit, like the dollar. By this I don't mean that you couldn&lsquo;t denominate the value of everything in dollars, i.e., in terms of your willingness to pay. But rather, that doing so would require more steps, more legwork and conversion factors, and that doing a good work with this isn&lsquo;t trivial. I&lsquo;ve outlined some of the work that I think would have to be done to do a principled version of this
-          <a href="https://forum.effectivealtruism.org/posts/3hH9NRqzGam65mgPG/five-steps-for-quantifying-speculative-interventions">here</a>.</p>
-        <p>But between now and that principled work being attempted and completed, there is still much to be done. In the meantime, we can use relative values. Relative values can be a few things:</p>
-        <ul>
-          <li>An ellicitation device: You can ask people how much they value something compared to some other things, and then you can process that information.</li>
-          <li>A storage medium: You can store the shape of some of the things that you value by storing their relative value, i.e., how much you value A compared to B, for many values of A and B</li>
-          <li>A complete storage medium, a representation of a utility function: If you know the relative values of A and B, for all possible As and Bs, you have a utility function!</li>
-        </ul>
-        <p>Here I'm going to mostly be talking about relative values as an ellicitation device, and as a storage medium for a
-          <i>relatively small</i>
-          amount of items. But their value would come to shine when considering
-          <i>many</i>
-          items, like
-          <a>here (to do)</a>
-        </p>
-        <p>Throughou, I'm considering that relative values are distribuions, or something akin to distributions. But previously, our estimates of the best option for optimizing consumer surplus was just one number. Let's quickly turn that into a distribution by drawing samples rather than taking the mean:</p>
-
+        <p>I'm not going to prioritize between those here, but it's conceivable that I could do so in the future. And readers are welcome to do their own estimations. For that purposes, it might be useful to estimate that value of consumption as a distribution, rather than as a point estimate, as above. So to do so, I provide the following code, which estimates the value of consumption as a distribution by taking samples from the cost and value distributions for each item, and then prioritizing amongst them. Note that this code pretty un-optimized, and it might make your browser stop to a crawl.</p>
         <div className="grid place-items-center w-full">
           {/* to do: wrapp in its own component, see above */}
           <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
@@ -619,28 +600,16 @@ best_values = SampleSet.fromList(
             <DynamicSquiggleChart squiggleChartCode={p1s7_chart_code}/>
           </div>
         </div>
-        <p>Sketch of rest of section:</p>
-				<ol>
-					<li>Relative values between different options</li>
-					<li>Graph/table/grid showing the relative values (requires relative values visualizations from other work to be reusable.</li>
-					<li>Mention that this work could be more ambitious, and could be most useful when estimating many other things.</li>
-				</ol>
-        <h2>Part III: Philanthopic prioritization</h2>
-        <p>Sketch of rest of section:</p>
-				<ol>
-					<li>Explain a use case where relative values could be very useful, e.g., using relative values instead of worldview diversification.</li>
-					<li></li>
-					<li></li>
-					<li></li>
-				</ol>
-        <h2>Part IV: What you've just read</h2>
-        <p>What you've just read the result of a few years of work at the Quantified Uncertainty Research Institute into a particular software stack. Previously, the closest that there was was something like
-          <a href="https://www.foretold.io/c/b2412a1d-0aa4-4e37-a12a-0aca9e440a96/n/c01b0899-4100-4efd-9710-c482d89eddad">this Foretold notebook</a>, which used public distributional forecasts from Foretold, an embryonic prediction platform, and maybe things like
-          <a href="https://www.metaculus.com/project/journal/">Metaculus journal entries</a>. Later on, we had Observable notebooks, like
+        <h3 className="mb-4">What you've just read</h3>
+        <p>What you've just read the result of a few years of work at the Quantified Uncertainty Research Institute into a particular software stack. Previously, the closest that there was was something like&nbsp;
+          <a href="https://www.foretold.io/c/b2412a1d-0aa4-4e37-a12a-0aca9e440a96/n/c01b0899-4100-4efd-9710-c482d89eddad">this Foretold notebook</a>, which used public distributional forecasts from Foretold, an embryonic prediction platform, and maybe things like&nbsp;
+          <a href="https://www.metaculus.com/project/journal/">Metaculus journal entries</a>. Later on, we had Observable notebooks, like&nbsp;
           <a href="">this one</a>
-          estimating the impact of the Against Malaria Foundation. Like the Observable page and unlike the Foretold or Metaculus notebooks, this page uses reusable React components, meaning that in principle anyone can replicate and use them in their own projects. In fact, you can fork this website
-          <a href="">here</a>(note: to do).</p>
-					<p>Some other explanations and disclaimers.</p>
+          &nbsp;estimating the impact of the Against Malaria Foundation.</p>
+        <p>Like the Observable page and unlike the Foretold or Metaculus notebooks, this page uses reusable React components, meaning that in principle anyone can replicate and use them in their own projects. In fact, you can fork this website&nbsp;
+          <a href="">here</a>
+        </p>
+        <p>Some other explanations and disclaimers.</p>
       </div>
     </div>
   );
