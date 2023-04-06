@@ -523,7 +523,7 @@ best_values = SampleSet.fromList(
           </div>
         </div>
         <p>But you get the idea. I've also played around with models of the value of a sleep mask, taking melatonin, having an external battery for a phone, stocking zinc lozenges, having a vertical mouse, an external microphone, or a blog. You can see some of those models&nbsp;
-          <a href="to do">here</a>.
+          <a href="https://github.com/quantified-uncertainty/relative-value-estimates">here</a>.
         </p>
         <h3 className="mb-4">Prioritization across consumption choices</h3>
         <p>Now, one thing we can do when given these estimates is to prioritize across them. That is, if you have a finite budget allocated to consumption and want to extract as much value from the above consumer products, what should you buy? I'm going to just paste some code and then make some comments about it:
