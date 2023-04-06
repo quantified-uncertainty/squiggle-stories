@@ -125,7 +125,7 @@ hedonic_delta_headphones = truncateLeft(hedonic_improvement_from_new_headphones 
 lifespan_headphones = ( 1 to 3 ) * 365 
 
 value_nice_headphones = hedonic_delta_headphones * hours_per_day_with_headphones * lifespan_headphones * value_hedonic_improvement_in_dollars
-recommendation_nice_headphones = mean(hedonic_delta_headphones) > mean(cost_nice_headphones) ? true : false
+recommendation_nice_headphones = mean(value_nice_headphones) > mean(cost_nice_headphones) ? true : false
 item_nice_headphones = {
   id: "2",
   num_id: 2,
