@@ -522,7 +522,7 @@ best_values = SampleSet.fromList(
             <DynamicSquiggleChart squiggleChartCode={p1s5_chart_code}/>
           </div>
         </div>
-        <p>But you get the idea. I've also played around with models of the value of a sleep mask, taking melatonin, having an external battery for a phone, stocking zinc lozenges, having a vertical mouse, an external microphone, or a blog. You can see some of those models
+        <p>But you get the idea. I've also played around with models of the value of a sleep mask, taking melatonin, having an external battery for a phone, stocking zinc lozenges, having a vertical mouse, an external microphone, or a blog. You can see some of those models&nbsp;
           <a href="to do">here</a>.
         </p>
         <h3 className="mb-4">Prioritization across consumption choices</h3>
@@ -553,7 +553,7 @@ best_values = SampleSet.fromList(
             <DynamicSquiggleChart squiggleChartCode={p1s6_chart_code}/>
           </div>
         </div>
-        <p>What the above code is doing is to try all possible combinations of items, and then see if they are under our budget, and if they beat the previous best option. That code is a bit stilted: because Squiggle doesn't yet have great escape hatches into JavaScript, I'm having to do things like define an "append" function. Though more list functions should be added in the &nbsp;<a href="https://github.com/quantified-uncertainty/squiggle/pull/1669">next release of Squiggle</a>.</p>
+        <p>What the above code is doing is to try all possible combinations of items, and then see if they are under our budget, and if they beat the previous best option. That code is a bit stilted: because Squiggle doesn't yet have great escape hatches into JavaScript, I'm having to do things like define an "append" function. Though more list functions should be added in the <a href="https://github.com/quantified-uncertainty/squiggle/pull/1669">next release of Squiggle</a>.</p>
         <p>We could also use a more conservative summary function for the purposes of our decisions. For instance, in the&nbsp;
           <code>getValueOfOption</code>
           &nbsp;function, instead of&nbsp;
@@ -610,6 +610,7 @@ best_values = SampleSet.fromList(
           <a href="https://github.com/quantified-uncertainty/squiggle-stories">here</a>
         </p>
         <p>Initially, I had high plans for this piece: I was planning on building up from consumption tradeoffs to other kinds of tradeoffs, to doing philanthropic prioritization with relative values, which is the current research agenda at QURI. Those plans are for now put on hold, but I hope this piece gave some hints about what better estimation technology on the web could look like.</p>
+				<p>If you liked this piece, you can follow the Quantified Uncertainty Research Institute on <a href="https://quri.substack.com/">on our substack</a>, or me personally <a href="https://nunosempere.com/.subscribe/">on my blog</a></p>.
       </div>
     </div>
   );
