@@ -1,6 +1,7 @@
 // import 'tailwindcss/tailwind.css'
 import "tailwindcss/tailwind.css";
 import "../styles/globals.css";
+import "@quri/squiggle-components/dist/main.css";
 
 import Head from "next/head";
 
