@@ -50,7 +50,7 @@ const joinEnter = joinArrayWithLineBreaks
 // Main
 export function Homepage() {
   const p1s1_title = "General variables" /* General variables */
-  let p1s1_general_variables = `salary = SampleSet.fromDist(70k to 150k)
+  let p1s1_general_variables = `salary = SampleSet.fromDist(30k to 150k)
 
 value_doubling_productivity = SampleSet.fromDist(30k to 75k)
 // how much would you pay to be 100% more productive? 
@@ -173,8 +173,8 @@ would_otherwise_get_distracted_by_phone = beta(5.224031849460337, 3.078888443018
 duration_distraction_seconds = 15 to 60
 value_not_getting_distracted_by_phone = value_additional_free_hour * duration_distraction_seconds / 3600
 // ^ one could also input the value of no distractions directly: 0.2 to 2 // 20cts to 2 dollars
-coolness_factor = 50 to 200 
-value_casio_watch = 365 * (num_check_time_day * would_otherwise_check_phone * would_otherwise_get_distracted_by_phone * value_not_getting_distracted_by_phone) + coolness_factor
+value_assigned_to_cool_watch_in_dollars = 50 to 200 
+value_casio_watch = 365 * (num_check_time_day * would_otherwise_check_phone * would_otherwise_get_distracted_by_phone * value_not_getting_distracted_by_phone) + value_assigned_to_cool_watch_in_dollars
 recommendation_casio_watch = mean(value_casio_watch) > mean(cost_casio_watch) ? true : false
 
 item_casio_watch = {
@@ -358,7 +358,7 @@ best_values = SampleSet.fromList(
     <div className="grid align-self-center items-center mt-10 place-items-center">
       <div className="w-9/12">
         <h1 className="font-bold mb-4">Things you should buy, quantified</h1>
-        <p>This piece showcases some web technology for estimation that we've been developing at the Quantified Uncertainty Research Institute. To do so, I'm presenting some estimates of the value that some consumer products would produce for someone with an earning power of around $100k. I'm doing this not because estimating the consumer surplus of products is maximally important, but because it is easy. In particular, consumption under capitalism provides a self-contained, simple framework for making tradeoffs.
+        <p>This piece showcases some web technology for estimation that we've been developing at the Quantified Uncertainty Research Institute. To do so, I'm presenting some estimates of the value that some consumer products would produce for someone with an earning power of around $100k. I'm doing this not because estimating the consumer surplus of products is maximally important, but because it is easily understandable. In particular, consumption under capitalism provides a self-contained, simple framework for making tradeoffs.
         </p>
         <p>All text fields are editable, and their new values will be computed once you click the &ldquo;Run model&rdquo; buttons. You reader might want to edit these fields to capture what you value as you follow along.
         </p>
@@ -553,7 +553,7 @@ best_values = SampleSet.fromList(
             <DynamicSquiggleChart squiggleChartCode={p1s6_chart_code}/>
           </div>
         </div>
-        <p>What the above code is doing is to try all possible combinations of items, and then see if they are under our budget, and if they beat the previous best option. That code is a bit stilted: because Squiggle doesn't yet have great escape hatches into JavaScript, I'm having to do things like define an "append" function. Though more list functions should be added in the <a href="https://github.com/quantified-uncertainty/squiggle/pull/1669">next release of Squiggle</a>.</p>
+        <p>What the above code is doing is to try all possible combinations of items, and then see if they are under our budget, and if they beat the previous best option. That code is a bit stilted: because Squiggle doesn't have great escape hatches into JavaScript, I'm having to do things like define an "append" function. Though more list functions should be added in the <a href="https://github.com/quantified-uncertainty/squiggle/pull/1669">next release of Squiggle</a>.</p>
         <p>We could also use a more conservative summary function for the purposes of our decisions. For instance, in the&nbsp;
           <code>getValueOfOption</code>
           &nbsp;function, instead of&nbsp;
@@ -601,7 +601,7 @@ best_values = SampleSet.fromList(
           </div>
         </div>
         <h3 className="mb-4">What you've just read</h3>
-        <p>What you've just read the result of a few years of work at the Quantified Uncertainty Research Institute into a particular software stack. Previously, the closest that there was was something like&nbsp;
+        <p>What you've just read is one possible way to use Squiggle—the main recent QURI project—namely as reusable components inside a React app. Previously, the closest that there was was something like&nbsp;
           <a href="https://www.foretold.io/c/b2412a1d-0aa4-4e37-a12a-0aca9e440a96/n/c01b0899-4100-4efd-9710-c482d89eddad">this Foretold notebook</a>, which used public distributional forecasts from Foretold, an embryonic prediction platform, and maybe things like&nbsp;
           <a href="https://www.metaculus.com/project/journal/">Metaculus journal entries</a>. Later on, we had Observable notebooks, like&nbsp;
           <a href="">this one</a>
