@@ -1,0 +1,13 @@
+getSomeHoursPerDay() = sample(5 to 16)
+getSomeDaysPerWeek() = round(sample(5 to 6))
+
+getSomeHoursPerWeek() = {
+  num_days = getSomeDaysPerWeek()
+	temp_list = List.upTo(1, round(num_days))
+	list_hours_day = List.map(temp_list, {|x| getSomeHoursPerDay()})
+	hours_week = List.reduce(list_hours_day, 0, {|a,b| a+b})
+	hours_week
+}
+
+list_samples_hours_week = List.map(List.upTo(1,1000), {|x| getSomeHoursPerWeek()})
+result = SampleSet.fromList(list_samples_hours_week)
