@@ -1,21 +1,19 @@
-getSomeHoursPerDay() = sample(5 to 16)
 getSomeDaysPerWeek() = round(sample(5 to 6))
+getSomeHoursPerDay = {|_| sample(5 to 16) }
 
-getSomeHoursPerWeek() = {
+getSomeHoursPerWeek = { |_|
   num_days = getSomeDaysPerWeek()
-	temp_list = List.upTo(1, round(num_days))
-	list_hours_day = List.map(temp_list, {|x| getSomeHoursPerDay()})
+	list_hours_day = List.map(List.make(num_days, 0), getSomeHoursPerDay)
 	hours_week = sum(list_hours_day)
 	hours_week
 }
 
-getSomeHoursPerYear() = {
+getSomeHoursPerYear = { |_| 
   num_weeks = round(sample(48 to 52))
-  temp_list = List.upTo(1, round(num_weeks))
-  list_hours_week = List.map(temp_list, {|_| getSomeHoursPerWeek()})
+  list_hours_week = List.map(List.make(num_weeks,0), getSomeHoursPerWeek)
   hours_year =  sum(list_hours_week)
   hours_year 
 }
 
-result = List.map(List.upTo(1,1000), {|x| getSomeHoursPerYear()}) -> SampleSet.fromList
+result = SampleSet.fromFn(getSomeHoursPerYear)
 result
