@@ -56,7 +56,8 @@ value_doubling_productivity = SampleSet.fromDist(30k to 75k)
 // how much would you pay to be 100% more productive? 
 // personally, i.e., from your own salary.
 
-hours_worked_in_year = SampleSet.fromDist( (48 to 52) * (5 to 6) * (5 to 16 ))// 48 to 52 weeks, 5 to 6 days per week, 5 to 16 hours per day
+hours_worked_in_year = 2400 to 2700
+// see https://gist.github.com/NunoSempere/af2515f669369996a4f343621c457b5c
 
 hours_day_in_front_of_computer = SampleSet.fromDist(8 to 14)
 
@@ -424,7 +425,7 @@ best_values = SampleSet.fromList(
         </div>
         <p>Some points of order about that model:</p>
         <ol>
-          <li>The value term represents consumer surplus, in dollars. But one would generally be willing to pay less than the consumer surplus for any particular computer brand, because one could always switch to a competitor, and because there are other competing products that also make a bid on a finite budget.</li>
+          <li>The value term represents consumer surplus, in dollars. But one would generally be willing to pay less than the consumer surplus for any particular computer brand, because one could always switch to a competitor, and because there are other competing products that also make a bid on a finite budget. For an extreme example, if capitalism was selling galaxies full of happy people for a dollar, the value in terms of consumer surplus for those galaxies would be more than one dollar.</li>
           <li>The beta term has a lot of unnecessary decimal points. I am mildly averse to deleting decimal points. The origin of these decimal points is&nbsp;
             <a href="https://nunosempere.com/blog/2023/03/15/fit-beta/">this tool</a>
             &nbsp;to find a beta distribution which fits a 90% confidence interval. In the future, finding a beta that fits a given confidence interval will probably be incorporated into the core Squiggle syntax&mdash;the language that I'm using to run these estimations&mdash;but we haven't figured out how yet. See&nbsp;
@@ -609,7 +610,7 @@ best_values = SampleSet.fromList(
         <p>Like the Observable page and unlike the Foretold or Metaculus notebooks, this page uses reusable React components, meaning that in principle anyone can replicate and use them in their own projects. In fact, you can fork this website&nbsp;
           <a href="https://github.com/quantified-uncertainty/squiggle-stories">here</a>
         </p>
-        <p>Initially, I had high plans for this piece: I was planning on building up from consumption tradeoffs to other kinds of tradeoffs, to doing philanthropic prioritization with relative values, which is the current research agenda at QURI. Those plans are for now put on hold, but I hope this piece gave some hints about what better estimation technology on the web could look like.</p>
+        <p>Initially, I had high plans for this piece: I was planning on building up from consumption tradeoffs to other kinds of tradeoffs, to doing philanthropic prioritization with relative values, which is the current research agenda at QURI. Those plans are postponed to possible future pieces, but I hope this piece gave some hints about what better estimation technology on the web could look like.</p>
 				<p>If you liked this piece, you can follow the Quantified Uncertainty Research Institute on <a href="https://quri.substack.com/">on our substack</a>, or me personally <a href="https://nunosempere.com/.subscribe/">on my blog</a></p>.
       </div>
     </div>
