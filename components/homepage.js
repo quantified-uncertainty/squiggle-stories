@@ -322,7 +322,7 @@ best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|
 
   // Prioritizing across consumer interventions
   const p1s7_title = "Prioritizing across consumer interventions, with distributional output"
-  const p1s7_prioritizing = `// Helpers  
+  const p1s7_initial_code = `// Helpers  
 item_value_dists = List.map(items, {|i| i.value})
 item_cost_dists = List.map(items, {|i| i.cost})
 listSum(xs) = List.reduce(xs, 0, {|a,b| a + b})
@@ -362,7 +362,7 @@ best_values = SampleSet.fromList(
   )
 )
 `
-  const [p1s7_editor_code, p1s7_setEditorCode] = useState(p1s7_prioritizing)
+  const [p1s7_editor_code, p1s7_setEditorCode] = useState(p1s7_initial_code)
   const [p1s7_chart_code, p1s7_setChartCode] = useState(`caveat = "Model takes around 20s, run with care."`)
   const p1s7_buildChartCode = () => {
     let temp_chart_code = (joinEnter([
@@ -449,30 +449,13 @@ best_values = SampleSet.fromList(
         <p>Here is a model of the value of a casio watch. I'm modelling most of its value as coming from reducing the number of distractions that stem from looking at the time on one's phone.
         </p>
 
-        <div className="grid place-items-center w-full">
-          {/* to do: wrapp in its own component, see above */}
-          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
-            <h4 className="text-lg font-bold mb-3">
-              {p1s5_title} </h4>
-            <textarea value={p1s5_editor_code}
-              readOnly={false}
-              onChange={
-                (event) => p1s5_setEditorCode(event.target.value)
-              }
-              rows={
-                countNumberOfLines(p1s5_editor_code)
-              }
-              cols={120}
-              spellCheck={"false"}
-              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
-            <br/>
-            <button className={effectButtonStyle}
-              onClick={p1s5_buildChartCode}>
-              Run model
-            </button>
-            <DynamicSquiggleChart squiggleChartCode={p1s5_chart_code}/>
-          </div>
-        </div>
+        <NotebookChartEditorWrapper title={p1s5_title}
+          initial_editor_code={p1s5_initial_code}
+          editor_code={p1s5_editor_code}
+          setEditorCode={p1s5_setEditorCode}
+          chart_code={p1s5_chart_code}
+          buildChartCode={p1s5_buildChartCode}
+          className="w-fit"/>
         <p>But you get the idea. I've also played around with models of the value of a sleep mask, taking melatonin, having an external battery for a phone, stocking zinc lozenges, having a vertical mouse, an external microphone, or a blog. You can see some of those models&nbsp;
           <a href="https://github.com/quantified-uncertainty/relative-value-estimates">here</a>.
         </p>
@@ -480,30 +463,13 @@ best_values = SampleSet.fromList(
         <p>Now, one thing we can do when given these estimates is to prioritize across them. That is, if you have a finite budget allocated to consumption and want to extract as much value from the above consumer products, what should you buy? I'm going to just paste some code and then make some comments about it:
         </p>
 
-        <div className="grid place-items-center w-full">
-          {/* to do: wrapp in its own component, see above */}
-          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
-            <h4 className="text-lg font-bold mb-3">
-              {p1s6_title} </h4>
-            <textarea value={p1s6_editor_code}
-              readOnly={false}
-              onChange={
-                (event) => p1s6_setEditorCode(event.target.value)
-              }
-              rows={
-                countNumberOfLines(p1s6_editor_code)
-              }
-              cols={120}
-              spellCheck={"false"}
-              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
-            <br/>
-            <button className={effectButtonStyle}
-              onClick={p1s6_buildChartCode}>
-              Run model
-            </button>
-            <DynamicSquiggleChart squiggleChartCode={p1s6_chart_code}/>
-          </div>
-        </div>
+        <NotebookChartEditorWrapper title={p1s6_title}
+          initial_editor_code={p1s6_initial_code}
+          editor_code={p1s6_editor_code}
+          setEditorCode={p1s6_setEditorCode}
+          chart_code={p1s6_chart_code}
+          buildChartCode={p1s6_buildChartCode}
+          className="w-fit"/>
         <p>What the above code is doing is to try all possible combinations of items, and then see if they are under our budget, and if they beat the previous best option. That code is a bit stilted: because Squiggle doesn't have great escape hatches into JavaScript, I'm having to do things like define an "append" function. Though more list functions should be added in the
           <a href="https://github.com/quantified-uncertainty/squiggle/pull/1669">next release of Squiggle</a>.</p>
         <p>We could also use a more conservative summary function for the purposes of our decisions. For instance, in the&nbsp;
@@ -528,30 +494,13 @@ best_values = SampleSet.fromList(
           <li>Reducing one&lsquo;s earnings, to spend more time on projects one considers important, but one&lsquo;s boss doesn&lsquo;t.</li>
         </ol>
         <p>I'm not going to prioritize between those here, but it's conceivable that I could do so in the future. And readers are welcome to do their own estimations. For that purposes, it might be useful to estimate that value of consumption as a distribution, rather than as a point estimate, as above. So to do so, I provide the following code, which estimates the value of consumption as a distribution by taking samples from the cost and value distributions for each item, and then prioritizing amongst them. Note that this code pretty un-optimized, and it might make your browser stop to a crawl.</p>
-        <div className="grid place-items-center w-full">
-          {/* to do: wrapp in its own component, see above */}
-          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
-            <h4 className="text-lg font-bold mb-3">
-              {p1s7_title} </h4>
-            <textarea value={p1s7_editor_code}
-              readOnly={false}
-              onChange={
-                (event) => p1s7_setEditorCode(event.target.value)
-              }
-              rows={
-                countNumberOfLines(p1s7_editor_code)
-              }
-              cols={120}
-              spellCheck={"false"}
-              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
-            <br/>
-            <button className={effectButtonStyle}
-              onClick={p1s7_buildChartCode}>
-              Run model
-            </button>
-            <DynamicSquiggleChart squiggleChartCode={p1s7_chart_code}/>
-          </div>
-        </div>
+        <NotebookChartEditorWrapper title={p1s7_title}
+          initial_editor_code={p1s7_initial_code}
+          editor_code={p1s7_editor_code}
+          setEditorCode={p1s7_setEditorCode}
+          chart_code={p1s7_chart_code}
+          buildChartCode={p1s7_buildChartCode}
+          className="w-fit"/>
         <h3 className="mb-4">What you've just read</h3>
         <p>What you've just read is one possible way to use Squiggle—the main recent QURI project—namely as reusable components inside a React app. Previously, the closest that there was was something like&nbsp;
           <a href="https://www.foretold.io/c/b2412a1d-0aa4-4e37-a12a-0aca9e440a96/n/c01b0899-4100-4efd-9710-c482d89eddad">this Foretold notebook</a>, which used public distributional forecasts from Foretold, an embryonic prediction platform, and maybe things like&nbsp;
