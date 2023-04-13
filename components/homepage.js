@@ -57,8 +57,7 @@ value_doubling_productivity = SampleSet.fromDist(30k to 75k)
 // personally, i.e., from your own salary.
 
 hours_worked_in_year = 2400 to 2700
-// see https://gist.github.com/NunoSempere/af2515f669369996a4f343621c457b5c
-
+// see https://github.com/quantified-uncertainty/squiggle-stories/blob/master/scratchpad/hours_per_year.squiggle
 hours_day_in_front_of_computer = SampleSet.fromDist(8 to 14)
 
 hourly_salary = SampleSet.fromDist(salary / hours_worked_in_year)
