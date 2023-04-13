@@ -38,28 +38,20 @@ export function NotebookChartEditorWrapper({
 }) {
   return (
     <div className="grid place-items-center w-full">
-      <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
-        <h4 className="text-lg font-bold mb-3">
+      <div className="bg-blue-100 w-10/12 mt-5 pt-10 content-center items-center pb-20 mb-5">
+        <h4 className="text-xl font-bold mb-3 ">
           {title} </h4>
-        <textarea value={editor_code}
-          readOnly={false}
-          onChange={
-            (event) => setEditorCode(event.target.value)
-          }
-          rows={
-            countNumberOfLines(editor_code)
-          }
-          cols={120}
-          spellCheck={"false"}
-          className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
-        <br/>
+        <div className="text-left">
+          <DynamicNativeSquiggleEditor initialSquiggleString={initial_editor_code}
+            onCodeChange={
+              newCode => setEditorCode(newCode)
+            }/>
+        </div>
         <button className={effectButtonStyle}
-          onClick={
-            buildChartCode
-        }>
+          onClick={buildChartCode}>
           Run model
         </button>
-        <DynamicSquiggleChart squiggleChartCode={chart_code}/>
+        <DynamicSquiggleChart squiggleChartCode={chart_code} className="text-left"/>
       </div>
     </div>
   )

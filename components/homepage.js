@@ -50,7 +50,7 @@ const joinEnter = joinArrayWithLineBreaks
 // Main
 export function Homepage() {
   const p1s1_title = "General variables" /* General variables */
-  let p1s1_general_variables = `salary = SampleSet.fromDist(30k to 150k)
+  let p1s1_initial_code = `salary = SampleSet.fromDist(30k to 150k)
 
 value_doubling_productivity = SampleSet.fromDist(30k to 75k)
 // how much would you pay to be 100% more productive? 
@@ -63,13 +63,13 @@ hours_day_in_front_of_computer = SampleSet.fromDist(8 to 14)
 hourly_salary = SampleSet.fromDist(salary / hours_worked_in_year)
 
 value_additional_free_hour = 30 to 150 // dollars`
-  const [p1s1_editor_code, p1s1_setEditorCode] = useState(p1s1_general_variables)
-  const [p1s1_chart_code, p1s1_setChartCode] = useState(p1s1_general_variables)
+  const [p1s1_editor_code, p1s1_setEditorCode] = useState(p1s1_initial_code)
+  const [p1s1_chart_code, p1s1_setChartCode] = useState(p1s1_initial_code)
   const p1s1_buildChartCode = () => p1s1_setChartCode(p1s1_editor_code)
 
   // Nice computer (e.g., MacBook Pro)
   let p1s2_title = "Nice computer"
-  let p1s2_nice_computer = `cost_nice_computer = 1k to 3k
+  let p1s2_initial_code = `cost_nice_computer = 1k to 3k
 fraction_improvement_productivity = beta(1.6308424891839157, 13.480636131095403)
 // ^ 1% to 30% (https://nunosempere.com/blog/2023/03/15/fit-beta/)
 value_from_productivity = fraction_improvement_productivity * value_doubling_productivity
@@ -84,13 +84,13 @@ item_nice_computer = {
 	value: value_nice_computer,
 	recommendation: recommendation_nice_computer
 }`
-  const [p1s2_editor_code, p1s2_setEditorCode] = useState(p1s2_nice_computer)
-  const [p1s2_chart_code, p1s2_setChartCode] = useState(joinEnter([p1s1_general_variables, p1s2_nice_computer, getItemToDisplayFromSquiggleString(p1s2_nice_computer)]))
+  const [p1s2_editor_code, p1s2_setEditorCode] = useState(p1s2_initial_code)
+  const [p1s2_chart_code, p1s2_setChartCode] = useState(joinEnter([p1s1_initial_code, p1s2_initial_code, getItemToDisplayFromSquiggleString(p1s2_initial_code)]))
   const p1s2_buildChartCode = () => p1s2_setChartCode(joinEnter([p1s1_editor_code, p1s2_editor_code, getItemToDisplayFromSquiggleString(p1s2_editor_code)]))
 
   // Nice headphones
   let p1s3_title = "Nice headphones"
-  let p1s3_nice_headphones = `cost_nice_headphones = 250 to 350 // dollars
+  let p1s3_initial_code = `cost_nice_headphones = 250 to 350 // dollars
 hours_per_day_with_headphones = hours_day_in_front_of_computer
 
 hedonic_improvement_from_current_headphones = 1 to 2
@@ -116,7 +116,10 @@ value_hedonic_improvement_in_dollars = 1 to 10
 // I'm still considering leaving the $10/1 point improvement
 // one could also adjust for hedonic treadmill?
 
-hedonic_delta_headphones = truncateLeft(hedonic_improvement_from_new_headphones - hedonic_improvement_from_current_headphones, 1)
+hedonic_delta_headphones = truncateLeft(
+  hedonic_improvement_from_new_headphones - hedonic_improvement_from_current_headphones,
+  1
+)
 // the calculation of the delta is obvious, 
 // but whence the truncation?
 // well, if you don't like the new ones, you can keep the old ones
@@ -124,7 +127,10 @@ hedonic_delta_headphones = truncateLeft(hedonic_improvement_from_new_headphones 
 // but we can also pretend that it's because there is some value of information
 lifespan_headphones = ( 1 to 3 ) * 365 
 
-value_nice_headphones = hedonic_delta_headphones * hours_per_day_with_headphones * lifespan_headphones * value_hedonic_improvement_in_dollars
+value_nice_headphones = hedonic_delta_headphones *
+  hours_per_day_with_headphones * 
+  lifespan_headphones * 
+  value_hedonic_improvement_in_dollars
 recommendation_nice_headphones = mean(value_nice_headphones) > mean(cost_nice_headphones) ? true : false
 item_nice_headphones = {
   id: "2",
@@ -135,21 +141,25 @@ item_nice_headphones = {
   recommendation: recommendation_nice_headphones
 }`
 
-  const [p1s3_editor_code, p1s3_setEditorCode] = useState(p1s3_nice_headphones)
-  const [p1s3_chart_code, p1s3_setChartCode] = useState(joinEnter([p1s1_general_variables, p1s3_nice_headphones, getItemToDisplayFromSquiggleString(p1s3_nice_headphones)]))
+  const [p1s3_editor_code, p1s3_setEditorCode] = useState(p1s3_initial_code)
+  const [p1s3_chart_code, p1s3_setChartCode] = useState(joinEnter([p1s1_initial_code, p1s3_initial_code, getItemToDisplayFromSquiggleString(p1s3_initial_code)]))
   const p1s3_buildChartCode = () => p1s3_setChartCode(joinEnter([p1s1_editor_code, p1s3_editor_code, getItemToDisplayFromSquiggleString(p1s3_editor_code)]))
 
   // Spare laptop charger
   let p1s4_title = "Spare laptop charger"
-  let p1s4_spare_charger = `cost_spare_laptop_charger = 15 to 40 // dollars
+  let p1s4_initial_code = `cost_spare_laptop_charger = 15 to 40 // dollars
 chance_of_default_charger_breakage_per_year = beta(1.2615450872566734, 5.967171456277175)
 // ^ 1% to 50%
 hours_needed_to_replace_it = 0.5 to 2
 value_of_avoiding_hassle_if_broken = 100 // dollars
 years_until_replacement_lost = 1 to 3
 
-value_spare_laptop_charger = chance_of_default_charger_breakage_per_year * hours_needed_to_replace_it * value_of_avoiding_hassle_if_broken * years_until_replacement_lost
-recommendation_spare_laptop_charger = mean(value_spare_laptop_charger) > mean(cost_spare_laptop_charger) ? true : false
+value_spare_laptop_charger = chance_of_default_charger_breakage_per_year * 
+  hours_needed_to_replace_it * 
+  value_of_avoiding_hassle_if_broken * 
+  years_until_replacement_lost
+recommendation_spare_laptop_charger = 
+  mean(value_spare_laptop_charger) > mean(cost_spare_laptop_charger) ? true : false
 item_spare_laptop_charger = {
   id: "5",
   num_id: 5,
@@ -158,13 +168,13 @@ item_spare_laptop_charger = {
   value: value_spare_laptop_charger,
   recommendation: recommendation_spare_laptop_charger
 }`
-  const [p1s4_editor_code, p1s4_setEditorCode] = useState(p1s4_spare_charger)
-  const [p1s4_chart_code, p1s4_setChartCode] = useState(joinEnter([p1s1_general_variables, p1s4_spare_charger, getItemToDisplayFromSquiggleString(p1s4_spare_charger)]))
+  const [p1s4_editor_code, p1s4_setEditorCode] = useState(p1s4_initial_code)
+  const [p1s4_chart_code, p1s4_setChartCode] = useState(joinEnter([p1s1_initial_code, p1s4_initial_code, getItemToDisplayFromSquiggleString(p1s4_initial_code)]))
   const p1s4_buildChartCode = () => p1s4_setChartCode(joinEnter([p1s1_editor_code, p1s4_editor_code, getItemToDisplayFromSquiggleString(p1s4_editor_code)]))
 
   // Casio watch
   let p1s5_title = "Spare laptop charger"
-  let p1s5_casio_watch = `cost_casio_watch = 15 to 50
+  let p1s5_initial_code = `cost_casio_watch = 15 to 50
 num_check_time_day = 1 to 20
 would_otherwise_check_phone = beta(1.5598524392792164, 0.36044253926611014)
 // 20% to 100% of the time
@@ -174,7 +184,13 @@ duration_distraction_seconds = 15 to 60
 value_not_getting_distracted_by_phone = value_additional_free_hour * duration_distraction_seconds / 3600
 // ^ one could also input the value of no distractions directly: 0.2 to 2 // 20cts to 2 dollars
 value_assigned_to_cool_watch_in_dollars = 50 to 200 
-value_casio_watch = 365 * (num_check_time_day * would_otherwise_check_phone * would_otherwise_get_distracted_by_phone * value_not_getting_distracted_by_phone) + value_assigned_to_cool_watch_in_dollars
+value_casio_watch = 365 * ( 
+    num_check_time_day *
+    would_otherwise_check_phone * 
+    would_otherwise_get_distracted_by_phone * 
+    value_not_getting_distracted_by_phone
+  ) + 
+  value_assigned_to_cool_watch_in_dollars
 recommendation_casio_watch = mean(value_casio_watch) > mean(cost_casio_watch) ? true : false
 
 item_casio_watch = {
@@ -185,16 +201,19 @@ item_casio_watch = {
   value: value_casio_watch,
   recommendation: recommendation_casio_watch
 }`
-  const [p1s5_editor_code, p1s5_setEditorCode] = useState(p1s5_casio_watch)
-  const [p1s5_chart_code, p1s5_setChartCode] = useState(joinEnter([p1s1_general_variables, p1s5_casio_watch, getItemToDisplayFromSquiggleString(p1s5_casio_watch)]))
+  const [p1s5_editor_code, p1s5_setEditorCode] = useState(p1s5_initial_code)
+  const [p1s5_chart_code, p1s5_setChartCode] = useState(joinEnter([p1s1_initial_code, p1s5_initial_code, getItemToDisplayFromSquiggleString(p1s5_initial_code)]))
   const p1s5_buildChartCode = () => p1s5_setChartCode(joinEnter([p1s1_editor_code, p1s5_editor_code, getItemToDisplayFromSquiggleString(p1s5_editor_code)]))
 
   // Prioritizing across consumer interventions
   const p1s6_title = "Prioritizing across consumer interventions"
-  const p1s6_prioritizing = `budget = 2.1k
+  const p1s6_initial_code = `budget = 2.1k
 granularity = 5 // dollars. lower number => more accuracy, less speed
 
-items = [item_nice_computer, item_nice_headphones, item_spare_laptop_charger, item_casio_watch, {name: "random lotery", value: 10 to 20, cost: 1 to 2}]
+items = [
+  item_nice_computer, item_nice_headphones, item_spare_laptop_charger, 
+  item_casio_watch, {name: "random lotery", value: 10 to 20, cost: 1 to 2}
+]
 
 n = List.length(items)
 num_options = 2^n // each item can be chosen or not
@@ -264,22 +283,28 @@ getValueOfOption = {|option|
 // Get best option within budget
 best_affordable_option = List.reduce(list_of_options, {value_best_option: 0}, {|iter, option|
   value_of_new_option = getValueOfOption(option) 
-  is_new_option_superior = (getCostOfOption(option) < budget) && (getValueOfOption(option) > iter.value_best_option)
+  is_new_option_superior = (getCostOfOption(option) < budget) && 
+    (getValueOfOption(option) > iter.value_best_option)
   item_names = List.map(getItemsInOption(option), {|o| o.name})
-  result = is_new_option_superior ? ({value_best_option: value_of_new_option, items_names_best_option: item_names, cost_best_option: getCostOfOption(option)}) : iter
+  result = is_new_option_superior ? 
+    ({
+      value_best_option: value_of_new_option, 
+      items_names_best_option: item_names, 
+      cost_best_option: getCostOfOption(option)
+    }) : iter
   result 
 })
 `
 
-  const [p1s6_editor_code, p1s6_setEditorCode] = useState(p1s6_prioritizing)
+  const [p1s6_editor_code, p1s6_setEditorCode] = useState(p1s6_initial_code)
   const [p1s6_chart_code, p1s6_setChartCode] = useState(joinEnter([
-    p1s1_general_variables,
-    p1s2_nice_computer,
-    p1s3_nice_headphones,
-    p1s4_spare_charger,
-    p1s5_casio_watch,
-    p1s6_prioritizing,
-    getItemToDisplayFromSquiggleString(p1s6_prioritizing)
+    p1s1_initial_code,
+    p1s2_initial_code,
+    p1s3_initial_code,
+    p1s4_initial_code,
+    p1s5_initial_code,
+    p1s6_initial_code,
+    getItemToDisplayFromSquiggleString(p1s6_initial_code)
   ]))
   const p1s6_buildChartCode = () => {
     let temp_chart_code = (joinEnter([
@@ -364,35 +389,24 @@ best_values = SampleSet.fromList(
         </p>
         <p>The background for this is that in my extended social circle, people sometimes make lists of &ldquo;things you should buy&rdquo;. My friend Gavin has gathered a list of such lists&nbsp;
           <a href="https://www.gleech.org/stuff">here</a>. So I&rsquo;m going to go over a few of the items on those lists, and estimate their value. First, I&rsquo;ll have to set some variables, and determine how much I value a few general classes of things relative to each other:</p>
-        <NotebookChartEditorWrapper title={p1s1_title} initial_editor_code={p1s1_general_variables} editor_code={p1s1_editor_code} setEditorCode={p1s1_setEditorCode} chart_code={p1s1_chart_code} buildChartCode={p1s1_buildChartCode}/>
+        <NotebookChartEditorWrapper title={p1s1_title}
+          initial_editor_code={p1s1_initial_code}
+          editor_code={p1s1_editor_code}
+          setEditorCode={p1s1_setEditorCode}
+          chart_code={p1s1_chart_code}
+          buildChartCode={p1s1_buildChartCode}
+          className="w-fit"/>
 
         <h3 className="mb-4">A nice computer</h3>
         <p>With the above variables in mind, here is how much I would value a nice computer, i.e., my current computer, or a not-too-new Macbook:</p>
 
-        <div className="grid place-items-center w-full">
-          {/* to do: wrapp in its own component, see above */}
-          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
-            <h4 className="text-lg font-bold mb-3">
-              {p1s2_title} </h4>
-            <textarea value={p1s2_editor_code}
-              readOnly={false}
-              onChange={
-                (event) => p1s2_setEditorCode(event.target.value)
-              }
-              rows={
-                countNumberOfLines(p1s2_editor_code)
-              }
-              cols={120}
-              spellCheck={"false"}
-              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
-            <br/>
-            <button className={effectButtonStyle}
-              onClick={p1s2_buildChartCode}>
-              Run model
-            </button>
-            <DynamicSquiggleChart squiggleChartCode={p1s2_chart_code}/>
-          </div>
-        </div>
+        <NotebookChartEditorWrapper title={p1s2_title}
+          initial_editor_code={p1s2_initial_code}
+          editor_code={p1s2_editor_code}
+          setEditorCode={p1s2_setEditorCode}
+          chart_code={p1s2_chart_code}
+          buildChartCode={p1s2_buildChartCode}
+          className="w-fit"/>
         <p>Some points of order about that model:</p>
         <ol>
           <li>The value term represents consumer surplus, in dollars. But one would generally be willing to pay less than the consumer surplus for any particular computer brand, because one could always switch to a competitor, and because there are other competing products that also make a bid on a finite budget. For an extreme example, if capitalism was selling galaxies full of happy people for a dollar, the value in terms of consumer surplus for those galaxies would be more than one dollar.</li>
@@ -410,60 +424,26 @@ best_values = SampleSet.fromList(
         <p>Here is a similar model about nice headphones:
         </p>
 
-        <div className="grid place-items-center w-full">
-          {/* to do: wrapp in its own component, see above */}
-          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
-            <h4 className="text-lg font-bold mb-3">
-              {p1s3_title} </h4>
-            <textarea value={p1s3_editor_code}
-              readOnly={false}
-              onChange={
-                (event) => p1s3_setEditorCode(event.target.value)
-              }
-              rows={
-                countNumberOfLines(p1s3_editor_code)
-              }
-              cols={120}
-              spellCheck={"false"}
-              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
-            <br/>
-            <button className={effectButtonStyle}
-              onClick={p1s3_buildChartCode}>
-              Run model
-            </button>
-            <DynamicSquiggleChart squiggleChartCode={p1s3_chart_code}/>
-          </div>
-        </div>
+        <NotebookChartEditorWrapper title={p1s3_title}
+          initial_editor_code={p1s3_initial_code}
+          editor_code={p1s3_editor_code}
+          setEditorCode={p1s3_setEditorCode}
+          chart_code={p1s3_chart_code}
+          buildChartCode={p1s3_buildChartCode}
+          className="w-fit"/>
         <p>It's kind of absurd how much headphones increase my level of happiness. I also thought it was interesting that someone with a $100k/year salary can't afford to pay $30/hour for a 3 point improvement in a 10 point scale, if that intervention is permanent.</p>
 
         <h3 className="mb-4">Spare laptop charger</h3>
         <p>Here is a similar model about a spare laptop charger. A similar model would apply to an external battery for a phone.
         </p>
 
-        <div className="grid place-items-center w-full">
-          {/* to do: wrapp in its own component, see above */}
-          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
-            <h4 className="text-lg font-bold mb-3">
-              {p1s4_title} </h4>
-            <textarea value={p1s4_editor_code}
-              readOnly={false}
-              onChange={
-                (event) => p1s4_setEditorCode(event.target.value)
-              }
-              rows={
-                countNumberOfLines(p1s4_editor_code)
-              }
-              cols={120}
-              spellCheck={"false"}
-              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
-            <br/>
-            <button className={effectButtonStyle}
-              onClick={p1s4_buildChartCode}>
-              Run model
-            </button>
-            <DynamicSquiggleChart squiggleChartCode={p1s4_chart_code}/>
-          </div>
-        </div>
+        <NotebookChartEditorWrapper title={p1s4_title}
+          initial_editor_code={p1s4_initial_code}
+          editor_code={p1s4_editor_code}
+          setEditorCode={p1s4_setEditorCode}
+          chart_code={p1s4_chart_code}
+          buildChartCode={p1s4_buildChartCode}
+          className="w-fit"/>
 
         <h3 className="mb-4">Casio watch</h3>
         <p>Here is a model of the value of a casio watch. I'm modelling most of its value as coming from reducing the number of distractions that stem from looking at the time on one's phone.

@@ -17,21 +17,17 @@ const SquiggleEditor = dynamic(() => import ("@quri/squiggle-components").then((
 */
 
 // Main
-export function DisplayerNativeSquiggleEditor({initialSquiggleString, onCodeChange}) { // console.log("initialSquiggleString", initialSquiggleString)
+export function DynamicNativeSquiggleEditor({initialSquiggleString, onCodeChange}) { // console.log("initialSquiggleString", initialSquiggleString)
 
   return (
-    <div className={`grid place-items-center w-11/12`}>
+    <div className={`grid place-items-center w-full bg-blue-100 w-full`}>
 
       <div className="grid place-items-center w-11/12">
-        <div className="grid place-items-center bg-white w-11/12 p-8">
-          <div className=" max-w-2xl"></div>
+        <div className="block w-11/12 items-center bg-white mt-5">
           <SquiggleEditor defaultCode={initialSquiggleString}
             onCodeChange={onCodeChange}
-            width={800}
-            height={400}
-            distributionChartSettings={
-              {showSummary: true}
-            }/>
+            hideViewer={true}
+            className=""/>
         </div>
       </div>
 

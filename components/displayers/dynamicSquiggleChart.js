@@ -19,9 +19,9 @@ export function DynamicSquiggleChart({ squiggleChartCode }) {
   } else {
     return (
       <div className="grid place-items-center">
-        <div className="grid place-items-center bg-white w-11/12 p-8">
+        <div className="grid place-items-center bg-white w-9/12 p-8">
           <div className=" max-w-2xl">
-						<div className="squiggle">
+						<div className="squiggle text-left">
             <SquiggleChart code={squiggleChartCode}
               width={672}
               height={1000}
