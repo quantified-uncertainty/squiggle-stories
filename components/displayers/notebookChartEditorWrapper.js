@@ -3,6 +3,9 @@ import React, {memo} from "react";
 import {DynamicSquiggleChart as OriginalDynamicSquiggleChart} from "./dynamicSquiggleChart";
 const DynamicSquiggleChart = memo(OriginalDynamicSquiggleChart);
 
+import {DynamicNativeSquiggleEditor as OriginalDynamicNativeSquiggleEditor} from "./dynamicNativeSquiggleEditor";
+const DynamicNativeSquiggleEditor = memo(OriginalDynamicNativeSquiggleEditor);
+
 const effectButtonStyle = "bg-transparent m-2 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-5 mb-5";
 
 const sum = xs => {
