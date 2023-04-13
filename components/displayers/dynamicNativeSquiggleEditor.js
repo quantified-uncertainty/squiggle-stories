@@ -1,11 +1,7 @@
 import React, {useRef, useState, useEffect} from "react";
 import dynamic from "next/dynamic";
 
-const SquiggleEditor = dynamic(async () => { 
-    const {SquiggleEditor} = await import ("@quri/squiggle-components/dist/esm/src/index.js")
-
-    return SquiggleEditor
-  }, {
+const SquiggleEditor = dynamic(() => import ("@quri/squiggle-components").then((mod) => mod.SquiggleEditor), {
   loading: () => <p>Loading...</p>,
   ssr: false
 });

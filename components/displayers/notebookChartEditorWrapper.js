@@ -1,7 +1,7 @@
 import React, {memo} from "react";
 
-// import {DynamicSquiggleChart as OriginalDynamicSquiggleChart} from "./dynamicSquiggleChart";
-// const DynamicSquiggleChart = memo(OriginalDynamicSquiggleChart);
+import {DynamicSquiggleChart as OriginalDynamicSquiggleChart} from "./dynamicSquiggleChart";
+const DynamicSquiggleChart = memo(OriginalDynamicSquiggleChart);
 
 import {DynamicNativeSquiggleEditor as OriginalDynamicNativeSquiggleEditor} from "./dynamicNativeSquiggleEditor";
 const DynamicNativeSquiggleEditor = memo(OriginalDynamicNativeSquiggleEditor);
