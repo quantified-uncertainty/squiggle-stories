@@ -9,5 +9,13 @@ getSomeHoursPerWeek() = {
 	hours_week
 }
 
-list_samples_hours_week = List.map(List.upTo(1,1000), {|x| getSomeHoursPerWeek()})
-result = SampleSet.fromList(list_samples_hours_week)
+getSomeHoursPerYear() = {
+  num_weeks = round(sample(48 to 52))
+  temp_list = List.upTo(1, round(num_weeks))
+  list_hours_week = List.map(temp_list, {|_| getSomeHoursPerWeek()})
+  hours_year =  List.reduce(list_hours_week, 0, {|a,b| a+b})
+  hours_year 
+}
+
+result = List.map(List.upTo(1,1000), {|x| getSomeHoursPerYear()}) -> SampleSet.fromList
+result
