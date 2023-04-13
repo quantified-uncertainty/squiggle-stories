@@ -1,10 +1,6 @@
 import React, {useRef, useState, useEffect} from "react";
 import dynamic from "next/dynamic";
-
-const SquiggleChart = dynamic(() => import ("@quri/squiggle-components").then((mod) => mod.SquiggleChart), {
-  loading: () => <p>Loading...</p>,
-  ssr: false
-});
+import {SquiggleChart} from "@quri/squiggle-components"
 
 /*
 squiggleInput: {
