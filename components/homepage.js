@@ -2,7 +2,7 @@ import React, {useState, memo} from "react";
 
 import {DynamicSquiggleChart as OriginalDynamicSquiggleChart} from "./displayers/dynamicSquiggleChart";
 const DynamicSquiggleChart = memo(OriginalDynamicSquiggleChart);
-
+import {NotebookChartEditorWrapper} from "./displayers/notebookChartEditorWrapper";
 // Helpers
 const effectButtonStyle = "bg-transparent m-2 hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded mt-5 mb-5";
 
@@ -364,7 +364,7 @@ best_values = SampleSet.fromList(
         </p>
         <p>The background for this is that in my extended social circle, people sometimes make lists of &ldquo;things you should buy&rdquo;. My friend Gavin has gathered a list of such lists&nbsp;
           <a href="https://www.gleech.org/stuff">here</a>. So I&rsquo;m going to go over a few of the items on those lists, and estimate their value. First, I&rsquo;ll have to set some variables, and determine how much I value a few general classes of things relative to each other:</p>
-
+        <NotebookChartEditorWrapper title={p1s1_title} initial_editor_code={p1s1_general_variables} editor_code={p1s1_editor_code} setEditorCode={p1s1_setEditorCode} chart_code={p1s1_chart_code} buildChartCode={p1s1_buildChartCode}/>
         <div className="grid place-items-center w-full">
           {/* I'm going to repeat this piece of code a few times, 
           and then later wrap it in its own function.
@@ -553,7 +553,8 @@ best_values = SampleSet.fromList(
             <DynamicSquiggleChart squiggleChartCode={p1s6_chart_code}/>
           </div>
         </div>
-        <p>What the above code is doing is to try all possible combinations of items, and then see if they are under our budget, and if they beat the previous best option. That code is a bit stilted: because Squiggle doesn't have great escape hatches into JavaScript, I'm having to do things like define an "append" function. Though more list functions should be added in the <a href="https://github.com/quantified-uncertainty/squiggle/pull/1669">next release of Squiggle</a>.</p>
+        <p>What the above code is doing is to try all possible combinations of items, and then see if they are under our budget, and if they beat the previous best option. That code is a bit stilted: because Squiggle doesn't have great escape hatches into JavaScript, I'm having to do things like define an "append" function. Though more list functions should be added in the
+          <a href="https://github.com/quantified-uncertainty/squiggle/pull/1669">next release of Squiggle</a>.</p>
         <p>We could also use a more conservative summary function for the purposes of our decisions. For instance, in the&nbsp;
           <code>getValueOfOption</code>
           &nbsp;function, instead of&nbsp;
@@ -610,7 +611,10 @@ best_values = SampleSet.fromList(
           <a href="https://github.com/quantified-uncertainty/squiggle-stories">here</a>
         </p>
         <p>Initially, I had high plans for this piece: I was planning on building up from consumption tradeoffs to other kinds of tradeoffs, to doing philanthropic prioritization with relative values, which is the current research agenda at QURI. Those plans are postponed to possible future pieces, but I hope this piece gave some hints about what better estimation technology on the web could look like.</p>
-				<p>If you liked this piece, you can follow the Quantified Uncertainty Research Institute on <a href="https://quri.substack.com/">on our substack</a>, or me personally <a href="https://nunosempere.com/.subscribe/">on my blog</a></p>.
+        <p>If you liked this piece, you can follow the Quantified Uncertainty Research Institute on
+          <a href="https://quri.substack.com/">on our substack</a>, or me personally
+          <a href="https://nunosempere.com/.subscribe/">on my blog</a>
+        </p>.
       </div>
     </div>
   );

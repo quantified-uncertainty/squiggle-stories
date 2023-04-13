@@ -6,11 +6,6 @@ const SquiggleChart = dynamic(() => import ("@quri/squiggle-components").then((m
   ssr: false
 });
 
-const SquiggleEditor = dynamic(() => import ("@quri/squiggle-components").then((mod) => mod.SquiggleEditor), {
-  loading: () => <p>Loading...</p>,
-  ssr: false
-});
-
 /*
 squiggleInput: {
   squiggleCode, // squiggle code
