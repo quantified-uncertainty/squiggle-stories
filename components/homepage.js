@@ -365,35 +365,6 @@ best_values = SampleSet.fromList(
         <p>The background for this is that in my extended social circle, people sometimes make lists of &ldquo;things you should buy&rdquo;. My friend Gavin has gathered a list of such lists&nbsp;
           <a href="https://www.gleech.org/stuff">here</a>. So I&rsquo;m going to go over a few of the items on those lists, and estimate their value. First, I&rsquo;ll have to set some variables, and determine how much I value a few general classes of things relative to each other:</p>
         <NotebookChartEditorWrapper title={p1s1_title} initial_editor_code={p1s1_general_variables} editor_code={p1s1_editor_code} setEditorCode={p1s1_setEditorCode} chart_code={p1s1_chart_code} buildChartCode={p1s1_buildChartCode}/>
-        <div className="grid place-items-center w-full">
-          {/* I'm going to repeat this piece of code a few times, 
-          and then later wrap it in its own function.
-          But wrapping it in its own function right now is not worth it
-          because it keeps changing too much and I have to go back and forth*/}
-          <div className="bg-blue-100 pt-8 pb-12 mb-8 mt-5 content-center items-center">
-            <h4 className="text-lg font-bold mb-3">
-              {p1s1_title} </h4>
-            <textarea value={p1s1_editor_code}
-              readOnly={false}
-              onChange={
-                (event) => p1s1_setEditorCode(event.target.value)
-              }
-              rows={
-                countNumberOfLines(p1s1_editor_code)
-              }
-              cols={120}
-              spellCheck={"false"}
-              className="text-left text-blue-800 bg-white rounded p-5 border-0 shadow outline-none focus:outline-none focus:ring w-10/12 font-mono font-light text-sm mb-5"/>
-            <br/>
-            <button className={effectButtonStyle}
-              onClick={
-                p1s1_buildChartCode // () => p1s1_setChartCode(p1s1_editor_code)
-            }>
-              Run model
-            </button>
-            <DynamicSquiggleChart squiggleChartCode={p1s1_chart_code}/>
-          </div>
-        </div>
 
         <h3 className="mb-4">A nice computer</h3>
         <p>With the above variables in mind, here is how much I would value a nice computer, i.e., my current computer, or a not-too-new Macbook:</p>
